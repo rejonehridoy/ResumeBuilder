@@ -1,7 +1,6 @@
 ﻿using Data.Files;
 using Data.Language;
-using Data.Log;
-using Data.Logs;
+using Data.LogEvents;
 using Data.Messages;
 using Data.Users;
 using Microsoft.EntityFrameworkCore;
