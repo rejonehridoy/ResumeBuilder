@@ -22,4 +22,10 @@
     <ProjectReference Include="..\Repository\Repository.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Content\Scripts\" />
+    <Folder Include="Areas\Admin\Content\Styles\" />
+    <Folder Include="wwwroot\images\admin\" />
+  </ItemGroup>
+
 </Project>
