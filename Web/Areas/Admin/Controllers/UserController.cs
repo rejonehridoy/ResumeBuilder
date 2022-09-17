@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Nop.Core.Infrastructure;
+using Service.Users.Interfaces;
+using Web.Areas.Admin.ViewModels;
 
 namespace Web.Areas.Admin.Controllers
 {
@@ -7,9 +9,16 @@ namespace Web.Areas.Admin.Controllers
     [Route("Admin/{Controller}/{action}")]
     public class UserController : Controller
     {
+        private readonly IUserService userService;
+
+        public UserController(IUserService userService)
+        {
+            this.userService = userService;
+        }
         public IActionResult List()
         {
-            return Content("Admin user index page");
+            var model = new UserViewModel();
+            return View(model);
         }
         [HttpGet]
         public IActionResult Create()
@@ -20,6 +29,11 @@ namespace Web.Areas.Admin.Controllers
         public IActionResult Create(int id)
         {
             return Content("User id: " + id);
+        }
+        public async Task<IActionResult> GetUsers()
+        {
+            var users = await userService.GetAllUsersAsync();
+            return Ok(users);
         }
     }
 }

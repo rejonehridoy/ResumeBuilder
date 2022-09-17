@@ -1,0 +1,83 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Core.DataTables.DataTablesModel
+
+<table class="table-striped table-responsive-sm" id="@Model.Name">
+    <thead>
+        <tr>
+            @foreach(var column in Model.ColumnCollection){
+                <th>@column.Title</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+<div class="table-footer">
+    <div class="pagination">
+        <a href="#">&laquo;</a>
+        <a href="#">1</a>
+        <a href="#" class="active">2</a>
+        <a href="#">3</a>
+        <a href="#">4</a>
+        <a href="#">5</a>
+        <a href="#">&raquo;</a>
+    </div>
+    <div class="table-result-count">
+        <p>Showing 1 to 10 of 57 entries</p>
+    </div>
+</div>
+
+
+<script asp-location="Footer">
+    var columnCollections = @Json.Serialize(Model.ColumnCollection);
+    var columns = columnCollections.map(col => col.data.charAt(0).toLowerCase() + col.data.substr(1));
+    console.log("columns: ",columns);
+    $.ajax({
+        url: "@Model.UrlRead.ActionName",
+        type: "GET",
+        dataType: "json",
+        //data: postData,
+        success: function (data, textStatus, jqXHR) {
+            if(data != null && data != undefined){
+                console.log(data);
+                var tableRows = '';
+                for (var rowIndex in data) {
+                    tableRows += '<tr>';
+                    console.log(data[rowIndex]);
+                    for (var index in columns) {
+                        if (typeof (data[rowIndex][columns[index]]) == "boolean"){
+                            if(data[rowIndex][columns[index]] == true)
+                                tableRows += '<td><span style="color:green;" class="material-symbols-outlined">check_circle</span></td > ';
+                            else{
+                                tableRows += '<td><span style="color:red;" class="material-symbols-outlined">cancel</span></td > ';
+                            }
+                        }else{
+                            tableRows += '<td>' + data[rowIndex][columns[index]] + '</td>';
+                        }
+                        console.log(columns[index], typeof(data[rowIndex][columns[index]]), data[rowIndex][columns[index]]);
+                    }
+                    tableRows += '</tr>'
+                }
+                $('#@Model.Name tbody').append(tableRows);
+            }else{
+                alert('Data not found');
+            }
+            
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+        }
+    });
+
+    //var abc = {
+    //    a: 'A',
+    //    b: 'B',
+    //    c: 'C'
+    //};
+    //for(var ob in abc){
+    //    console.log(ob, abc[ob]);
+    //}
+</script>

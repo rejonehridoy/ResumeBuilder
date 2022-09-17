@@ -20,11 +20,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Repository\Repository.csproj" />
+    <ProjectReference Include="..\Service\Service.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Content\Scripts\" />
     <Folder Include="Areas\Admin\Content\Styles\" />
+    <Folder Include="Areas\Admin\Views\NewFolder\" />
     <Folder Include="wwwroot\images\admin\" />
   </ItemGroup>
 

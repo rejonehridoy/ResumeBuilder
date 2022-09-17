@@ -9,13 +9,13 @@ namespace OA.Repo
 {
     public interface IRepository<T> where T : class
     {
-        IEnumerable<T> GetAll();
-        T Get(int id);
-        void Insert(T entity);
-        void Update(T entity);
-        void Delete(int id);
-        void Remove(T entity);
+        Task<List<T>> GetAllAsync();
+        Task<T> GetAsync(int id);
+        Task InsertAsync(T entity);
+        Task UpdateAsync(T entity);
+        Task DeleteAsync(int id);
+        Task RemoveAsync(T entity);
         ResumeBuilderDbContext GetContext();
-        void SaveChanges();
+        Task SaveChangesAsync();
     }
 }

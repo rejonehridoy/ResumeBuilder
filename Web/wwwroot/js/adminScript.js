@@ -63,5 +63,5 @@ themeToggler.addEventListener("click", () => {
         <td class="primary">Details</td>
     `;
     tr.innerHTML = trContent;
-    document.querySelector('table tbody').appendChild(tr);
+     document.querySelector('table .dashboard-table-body')?.appendChild(tr);
 });

@@ -20,9 +20,9 @@ namespace OA.Repo
             entities = context.Set<T>();
         }
 
-        public void Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            var entity = this.Get(id);
+            var entity = await this.GetAsync(id);
             if (entity == null)
             {
                 throw new ArgumentNullException("entity");
@@ -31,31 +31,31 @@ namespace OA.Repo
             context.SaveChanges();
         }
 
-        public T Get(int id)
+        public async Task<T> GetAsync(int id)
         {
-            return entities.Find(id);
+            return await entities.FindAsync(id);
         }
 
         public ResumeBuilderDbContext GetContext()
         {
             return context;
         }
-        public IEnumerable<T> GetAll()
+        public async Task<List<T>> GetAllAsync()
         {
-            return entities.AsEnumerable();
+            return await entities.ToListAsync();
         }
 
-        public void Insert(T entity)
+        public async Task InsertAsync(T entity)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException("entity");
             }
-            entities.Add(entity);
+            await entities.AddAsync(entity);
             context.SaveChanges();
         }
 
-        public void Remove(T entity)
+        public async Task RemoveAsync(T entity)
         {
             if (entity == null)
             {
@@ -64,12 +64,12 @@ namespace OA.Repo
             entities.Remove(entity);
         }
 
-        public void SaveChanges()
+        public async Task SaveChangesAsync()
         {
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public void Update(T entity)
+        public async Task UpdateAsync(T entity)
         {
             if (entity == null)
             {
@@ -77,7 +77,7 @@ namespace OA.Repo
             }
             context.Attach(entity);
             context.Entry(entity).State = EntityState.Modified;
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 }

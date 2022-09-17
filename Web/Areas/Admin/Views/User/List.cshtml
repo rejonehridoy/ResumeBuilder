@@ -1,0 +1,42 @@
+﻿@model UserViewModel
+<div>This is user table</div>
+@await Html.PartialAsync("Table", new DataTablesModel
+{
+    Name = "user-table",
+    UrlRead = new DataUrl("GetUsers", "User"),
+    ColumnCollection = new List<ColumnProperty>
+    {
+        new ColumnProperty(nameof(Model.Email))
+        {
+            Title = "Email"
+        },
+        new ColumnProperty(nameof(Model.Name))
+        {
+            Title = "Name"
+        },
+        new ColumnProperty(nameof(Model.Uid))
+        {
+            Title = "Uid"
+        },
+        new ColumnProperty(nameof(Model.Active))
+        {
+            Title = "Active"
+        },
+        new ColumnProperty(nameof(Model.Deleted))
+        {
+            Title = "Deleted"
+        },
+        new ColumnProperty(nameof(Model.CreatedDate))
+        {
+            Title = "Created Date"
+        },
+        new ColumnProperty(nameof(Model.LastIpAddress))
+        {
+            Title = "Last IP Address"
+        },
+        new ColumnProperty(nameof(Model.LastActivityDate))
+        {
+            Title = "Last Activity Date"
+        }
+    }
+});
