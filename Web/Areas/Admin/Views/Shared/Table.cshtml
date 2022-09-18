@@ -34,50 +34,73 @@
 
 <script asp-location="Footer">
     var columnCollections = @Json.Serialize(Model.ColumnCollection);
+    var columnsTitles = columnCollections.map(col => col.title);
+    var columnsTypes = columnCollections.map(col => col.render);
     var columns = columnCollections.map(col => col.data.charAt(0).toLowerCase() + col.data.substr(1));
-    console.log("columns: ",columns);
-    $.ajax({
-        url: "@Model.UrlRead.ActionName",
-        type: "GET",
-        dataType: "json",
-        //data: postData,
-        success: function (data, textStatus, jqXHR) {
-            if(data != null && data != undefined){
-                console.log(data);
-                var tableRows = '';
-                for (var rowIndex in data) {
-                    tableRows += '<tr>';
-                    console.log(data[rowIndex]);
-                    for (var index in columns) {
-                        if (typeof (data[rowIndex][columns[index]]) == "boolean"){
-                            if(data[rowIndex][columns[index]] == true)
-                                tableRows += '<td><span style="color:green;" class="material-symbols-outlined">check_circle</span></td > ';
-                            else{
-                                tableRows += '<td><span style="color:red;" class="material-symbols-outlined">cancel</span></td > ';
-                            }
-                        }else{
-                            tableRows += '<td>' + data[rowIndex][columns[index]] + '</td>';
-                        }
-                        console.log(columns[index], typeof(data[rowIndex][columns[index]]), data[rowIndex][columns[index]]);
-                    }
-                    tableRows += '</tr>'
-                }
-                $('#@Model.Name tbody').append(tableRows);
-            }else{
-                alert('Data not found');
-            }
-            
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-        }
-    });
 
-    //var abc = {
-    //    a: 'A',
-    //    b: 'B',
-    //    c: 'C'
-    //};
-    //for(var ob in abc){
-    //    console.log(ob, abc[ob]);
-    //}
+    function tableDataDelete(event) {
+        let id = $(event).attr("data-id");
+        let url = $(event).attr("data-url");
+        if (confirm("Are you sure to delete this row? This can't undone") == true) {
+            text = "You pressed OK!";
+            $.ajax({
+                url: url,
+                type: "GET",
+                dataType: "json",
+                data: {
+                    id: id
+                },
+                success: function (data, textStatus, jqXHR) {
+                    console.log(data);
+                }
+            });
+        }
+    }
+    (function readTableData()
+    {
+        $.ajax({
+            url: "@Model.UrlRead.ActionName",
+            type: "GET",
+            dataType: "json",
+            success: function (data, textStatus, jqXHR) {
+                if (data != null && data != undefined) {
+                    var tableRows = '';
+                    for (var rowIndex in data) {
+                        tableRows += '<tr>';
+                        for (var index in columns) {
+
+                            if (columns[index] == "id") {
+                                if (columnsTypes[index] == @Json.Serialize((int)Render.Edit)) {
+                                    tableRows += `<td><a class="btn btn-secondary" href="/admin/@Model.UrlUpdate.ControllerName/@Model.UrlUpdate.ActionName?${columns[index]}=${data[rowIndex][columns[index]]}">${columnsTitles[index]}</a></td>`;
+                                } else if (columnsTypes[index] == @Json.Serialize((int)Render.Delete)) {
+                                    tableRows += `<td><a class="btn btn-danger" onClick="tableDataDelete(this);" data-url="/admin/@Model.UrlDelete.ControllerName/@Model.UrlDelete.ActionName" data-id="${data[rowIndex][columns[index]]}">${columnsTitles[index]}</a></td>`;
+                                } else if (columnsTypes[index] == @Json.Serialize((int)Render.Data)){
+                                    tableRows += '<td>' + data[rowIndex][columns[index]] + '</td>';
+                                }
+                            } else {
+                                if (typeof (data[rowIndex][columns[index]]) == "boolean") {
+                                    if (data[rowIndex][columns[index]] == true)
+                                        tableRows += '<td><span style="color:green;" class="material-symbols-outlined">check_circle</span></td > ';
+                                    else {
+                                        tableRows += '<td><span style="color:red;" class="material-symbols-outlined">cancel</span></td > ';
+                                    }
+                                } else {
+                                    tableRows += '<td>' + data[rowIndex][columns[index]] + '</td>';
+                                }
+                            }
+
+
+                        }
+                        tableRows += '</tr>'
+                    }
+                    $('#@Model.Name tbody').append(tableRows);
+                } else {
+                    alert('Data not found');
+                }
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+            }
+        });
+    })();
 </script>

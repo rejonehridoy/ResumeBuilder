@@ -35,5 +35,13 @@ namespace Web.Areas.Admin.Controllers
             var users = await userService.GetAllUsersAsync();
             return Ok(users);
         }
+        public async Task<IActionResult> EditUser(int id)
+        {
+            return Content("Edit User");
+        }
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            return Content("Delete User");
+        }
     }
 }

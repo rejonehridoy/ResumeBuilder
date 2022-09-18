@@ -65,58 +65,58 @@
             </div>
 
             <div class="sidebar">
-                <a href="#" class="active">
+                <a href="/admin" id="menu-dashboard" class="menu-item">
                     <span class="material-symbols-outlined">grid_view</span>
                     <h3>Dashboard</h3>
                 </a>
-                <a href="#">
+                <a href="/admin/user/list" id="menu-users" class="menu-item">
                     <span class="material-symbols-outlined">person</span>
                     <h3>Users</h3>
                 </a>
-                <a href="#">
+                <a href="/admin/templates/list" id="menu-templates" class="menu-item">
                     <span class="material-symbols-outlined">library_books</span>
                     <h3>Templates</h3>
                 </a>
-                <a href="#">
+                <a href="/admin/userActivity/list" id="menu-user-activity" class="menu-item">
                     <span class="material-symbols-outlined">insights</span>
                     <h3>User Activity</h3>
                 </a>
-                <a href="#">
+                <a href="/admin/log/list" id="menu-log" class="menu-item">
                     <span class="material-symbols-outlined">grouped_bar_chart</span>
                     <h3>Log</h3>
                     @*<span class="message-count">26</span>*@
                 </a>
-                <a href="#">
+                <a href="/admin/userReview/list" id="menu-user-review" class="menu-item">
                     <span class="material-symbols-outlined">rate_review</span>
                     <h3>User Review</h3>
                 </a>
-                <a href="#">
+                <a href="/admin/reports/list" id="menu-reports" class="menu-item">
                     <span class="material-symbols-outlined">report</span>
                     <h3>Reports</h3>
                 </a>
-                <a href="#">
+                <a href="/admin/messages/list" id="menu-messages" class="menu-item">
                     <span class="material-symbols-outlined">mail</span>
                     <h3>Messages</h3>
                     <span class="message-count">26</span>
                 </a>
-                <a href="#">
+                <a href="#" id="menu-settings" class="menu-item">
                     <span class="material-symbols-outlined">settings</span>
                     <h3>Settings</h3>
                 </a>
-                <a href="#">
+                <a href="#" id="menu-local-resources" class="menu-item">
                     <span class="material-symbols-outlined">language</span>
                     <h3>Local Resources</h3>
                 </a>
-                <a href="#">
+                <a href="#" id="menu-home-page-items" class="menu-item">
                     <span class="material-symbols-outlined">table_rows</span>
                     <h3>Home Page Items</h3>
                 </a>
-                <a href="#">
+                <a href="#" id="menu-documents" class="menu-item">
                     <span class="material-symbols-outlined">file_copy</span>
                     <h3>Documents</h3>
                 </a>
                 
-                <a href="#">
+                <a href="#" id="menu-logout" class="menu-item">
                     <span class="material-symbols-outlined">logout</span>
                     <h3>Logout</h3>
                 </a>
@@ -126,7 +126,7 @@
         <main role="main" class="pb-3">
             <div class="top d-flex justify-content-between">
                 <div class="align-items-center">
-                    <h1 class="page-header-top">Dashboard</h1>
+                    <h1 class="page-header-top">@ViewBag.Title</h1>
                     <button id="menu-btn">
                         <span class="material-symbols-outlined">menu</span>
                     </button>
@@ -173,7 +173,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js"
             integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2"
             crossorigin="anonymous"></script>*@
-    <script src="~/js/adminScript.js"></script>
+    <script defer src="~/js/adminScript.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".menu-item").removeClass("active");
+            $('@ViewBag.ActiveMenuId').addClass("active");
+        });
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

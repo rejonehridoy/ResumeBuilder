@@ -1,18 +1,29 @@
 ﻿@model UserViewModel
 <div>This is user table</div>
+@{
+    ViewBag.Title = "Users";
+    ViewBag.ActiveMenuId = "#menu-users";
+}
 @await Html.PartialAsync("Table", new DataTablesModel
 {
     Name = "user-table",
     UrlRead = new DataUrl("GetUsers", "User"),
+    UrlUpdate = new DataUrl("EditUser", "User"),
+    UrlDelete = new DataUrl("DeleteUser" , "User"),
     ColumnCollection = new List<ColumnProperty>
     {
-        new ColumnProperty(nameof(Model.Email))
+        new ColumnProperty(nameof(Model.Id))
         {
-            Title = "Email"
+            Title = "Id",
+            Render = Render.Data
         },
         new ColumnProperty(nameof(Model.Name))
         {
             Title = "Name"
+        },
+        new ColumnProperty(nameof(Model.Email))
+        {
+            Title = "Email"
         },
         new ColumnProperty(nameof(Model.Uid))
         {
@@ -37,6 +48,16 @@
         new ColumnProperty(nameof(Model.LastActivityDate))
         {
             Title = "Last Activity Date"
+        },
+        new ColumnProperty(nameof(Model.Id))
+        {
+            Title = "Edit",
+            Render = Render.Edit
+        },
+        new ColumnProperty(nameof(Model.Id))
+        {
+            Title = "Delete",
+            Render = Render.Delete
         }
     }
 });

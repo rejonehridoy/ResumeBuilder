@@ -83,6 +83,7 @@
         /// Enable or disable encode on the data in this column.
         /// </summary>
         public bool Encode { get; set; }
+        public Render Render { get; set; } = Render.Data;
 
         #endregion
     }

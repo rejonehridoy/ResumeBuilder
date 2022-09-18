@@ -596,10 +596,10 @@ table .material-symbols-outlined{
         width: 5.6rem;
     }
 
-    aside .sidebar a:last-child {
+    /*aside .sidebar a:last-child {
         position: relative;
         margin-top: 1.8rem;
-    }
+    }*/
 }
 
  /* ================= Media Query 768 ==============*/
@@ -644,10 +644,10 @@ table .material-symbols-outlined{
         height: 3.4rem;
     }
 
-    aside .sidebar a:last-child{
+    /*aside .sidebar a:last-child{
         position: absolute;
         bottom: 5rem;
-    }
+    }*/
 
     aside .close {
         display: inline-block;

@@ -1,8 +1,9 @@
-﻿using Data.Files;
+﻿using Core;
+using Data.Files;
 
 namespace Web.Areas.Admin.ViewModels
 {
-    public class UserViewModel
+    public class UserViewModel : BaseModel
     {
         public string? Uid { get; set; }
         public string? Guid { get; set; }
