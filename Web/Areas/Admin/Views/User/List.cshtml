@@ -1,15 +1,72 @@
 ﻿@model UserViewModel
+@using Data.Users;
 <div>This is user table</div>
 @{
     ViewBag.Title = "Users";
     ViewBag.ActiveMenuId = "#menu-users";
 }
+<div class="user-search-section">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="Name">Name</label>
+                <input type="text" class="form-control" asp-for="Name" aria-describedby="emailHelp">
+            </div>
+            <div class="form-group">
+                <label for="Email">Email</label>
+                <input type="email" class="form-control" asp-for="Email">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">Check me out</label>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="UserName">UserName</label>
+                <input type="text" class="form-control" asp-for="Username">
+            </div>
+            <div class="form-group">
+                <label for="UserRole">User Role</label>
+                @Html.DropDownList("UserRole", Model.AvailableActiveTypes, new { @class = "form-control" })
+                <select asp-for="UserRole" asp-items="Model.AvailableActiveTypes" />
+            </div>
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" asp-for="Active">
+                <label class="form-check-label" asp-for="Active">Active</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12" style="text-align: center;">
+            <button id="btn-user-search" class="btn btn-primary">Search</button>
+        </div>
+    </div>
+</div>
+
+
 @await Html.PartialAsync("Table", new DataTablesModel
 {
     Name = "user-table",
     UrlRead = new DataUrl("GetUsers", "User"),
     UrlUpdate = new DataUrl("EditUser", "User"),
     UrlDelete = new DataUrl("DeleteUser" , "User"),
+    SearchButtonId = "btn-user-search",
+    SearchDivClassName = "user-search-section",
+    Filters = new List<FilterParameter>
+    {
+        new FilterParameter(nameof(Model.Email)){
+
+        },
+        new FilterParameter(nameof(Model.Name)){
+
+        },
+        new FilterParameter(nameof(Model.UserRole)){
+
+        }
+    },
     ColumnCollection = new List<ColumnProperty>
     {
         new ColumnProperty(nameof(Model.Id))

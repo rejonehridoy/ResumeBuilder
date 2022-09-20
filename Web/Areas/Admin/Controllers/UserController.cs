@@ -30,7 +30,7 @@ namespace Web.Areas.Admin.Controllers
         {
             return Content("User id: " + id);
         }
-        public async Task<IActionResult> GetUsers()
+        public async Task<IActionResult> GetUsers(UserViewModel model)
         {
             var users = await userService.GetAllUsersAsync();
             return Ok(users);

@@ -1,8 +1,6 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@{
-}
 @model Core.DataTables.DataTablesModel
 
 <table class="table-striped table-responsive-sm" id="@Model.Name">
@@ -13,10 +11,9 @@
             }
         </tr>
     </thead>
-    <tbody>
-    </tbody>
+    <tbody></tbody>
 </table>
-<div class="table-footer">
+<div class="table-footer" id="@Model.Name-footer">
     <div class="pagination">
         <a href="#">&laquo;</a>
         <a href="#">1</a>
@@ -27,16 +24,71 @@
         <a href="#">&raquo;</a>
     </div>
     <div class="table-result-count">
-        <p>Showing 1 to 10 of 57 entries</p>
+        <p>Showing 1 to 10 of <span class="total-table-entries">5</span> entries</p>
     </div>
 </div>
+@if (!string.IsNullOrEmpty(Model.SearchButtonId))
+{
+    <script asp-location="Footer">
+        let searchId = "#@Model.SearchButtonId";
 
+        $(searchId).on("click", function () {
+            readTableData();
+        });
+
+    </script>
+}
 
 <script asp-location="Footer">
     var columnCollections = @Json.Serialize(Model.ColumnCollection);
+    var filterCollections = @Json.Serialize(Model.Filters);
+    var filterNames = filterCollections.map(filter => filter.name);
     var columnsTitles = columnCollections.map(col => col.title);
     var columnsTypes = columnCollections.map(col => col.render);
     var columns = columnCollections.map(col => col.data.charAt(0).toLowerCase() + col.data.substr(1));
+
+
+    function getSearchFilterData()
+    {
+        let filterData = {};
+        filterNames.forEach((item, index) => {
+            filterData[item] = ($(`#${item}`).val() == undefined) ? '' : $(`#${item}`).val();
+        });
+        return filterData;
+    }
+
+    function setTableData(data) {
+        $('#@Model.Name tbody').empty();
+        var tableRows = '';
+        for (var rowIndex in data) {
+            tableRows += '<tr>';
+            for (var index in columns) {
+                if (columns[index] == "id") {
+                    if (columnsTypes[index] == @Json.Serialize((int)Render.Edit)) {
+                        tableRows += `<td><a class="btn btn-secondary" href="/admin/@Model.UrlUpdate.ControllerName/@Model.UrlUpdate.ActionName?${columns[index]}=${data[rowIndex][columns[index]]}">${columnsTitles[index]}</a></td>`;
+                    } else if (columnsTypes[index] == @Json.Serialize((int)Render.Delete)) {
+                        tableRows += `<td><a class="btn btn-danger" onClick="tableDataDelete(this);" data-url="/admin/@Model.UrlDelete.ControllerName/@Model.UrlDelete.ActionName" data-id="${data[rowIndex][columns[index]]}">${columnsTitles[index]}</a></td>`;
+                    } else if (columnsTypes[index] == @Json.Serialize((int)Render.Data)) {
+                        tableRows += '<td>' + data[rowIndex][columns[index]] + '</td>';
+                    }
+                } else {
+                    if (typeof (data[rowIndex][columns[index]]) == "boolean") {
+                        if (data[rowIndex][columns[index]] == true)
+                            tableRows += '<td><span style="color:green;" class="material-symbols-outlined">check_circle</span></td > ';
+                        else {
+                            tableRows += '<td><span style="color:red;" class="material-symbols-outlined">cancel</span></td > ';
+                        }
+                    } else {
+                        tableRows += '<td>' + data[rowIndex][columns[index]] + '</td>';
+                    }
+                }
+            }
+            tableRows += '</tr>'
+        }
+        $('#@Model.Name-footer .total-table-entries').html(data.length);
+        $('#@Model.Name tbody').append(tableRows);
+
+    }
 
     function tableDataDelete(event) {
         let id = $(event).attr("data-id");
@@ -56,44 +108,18 @@
             });
         }
     }
-    (function readTableData()
+    function readTableData()
     {
+        let data = getSearchFilterData();
         $.ajax({
             url: "@Model.UrlRead.ActionName",
             type: "GET",
-            dataType: "json",
+            contentType: "application/json",
+            data: data,
             success: function (data, textStatus, jqXHR) {
                 if (data != null && data != undefined) {
-                    var tableRows = '';
-                    for (var rowIndex in data) {
-                        tableRows += '<tr>';
-                        for (var index in columns) {
-
-                            if (columns[index] == "id") {
-                                if (columnsTypes[index] == @Json.Serialize((int)Render.Edit)) {
-                                    tableRows += `<td><a class="btn btn-secondary" href="/admin/@Model.UrlUpdate.ControllerName/@Model.UrlUpdate.ActionName?${columns[index]}=${data[rowIndex][columns[index]]}">${columnsTitles[index]}</a></td>`;
-                                } else if (columnsTypes[index] == @Json.Serialize((int)Render.Delete)) {
-                                    tableRows += `<td><a class="btn btn-danger" onClick="tableDataDelete(this);" data-url="/admin/@Model.UrlDelete.ControllerName/@Model.UrlDelete.ActionName" data-id="${data[rowIndex][columns[index]]}">${columnsTitles[index]}</a></td>`;
-                                } else if (columnsTypes[index] == @Json.Serialize((int)Render.Data)){
-                                    tableRows += '<td>' + data[rowIndex][columns[index]] + '</td>';
-                                }
-                            } else {
-                                if (typeof (data[rowIndex][columns[index]]) == "boolean") {
-                                    if (data[rowIndex][columns[index]] == true)
-                                        tableRows += '<td><span style="color:green;" class="material-symbols-outlined">check_circle</span></td > ';
-                                    else {
-                                        tableRows += '<td><span style="color:red;" class="material-symbols-outlined">cancel</span></td > ';
-                                    }
-                                } else {
-                                    tableRows += '<td>' + data[rowIndex][columns[index]] + '</td>';
-                                }
-                            }
-
-
-                        }
-                        tableRows += '</tr>'
-                    }
-                    $('#@Model.Name tbody').append(tableRows);
+                    setTableData(data);
+                    
                 } else {
                     alert('Data not found');
                 }
@@ -102,5 +128,6 @@
             error: function (jqXHR, textStatus, errorThrown) {
             }
         });
-    })();
+    }
+    readTableData();
 </script>

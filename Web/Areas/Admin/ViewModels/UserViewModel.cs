@@ -1,5 +1,7 @@
 ﻿using Core;
+using Core.Enums;
 using Data.Files;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Web.Areas.Admin.ViewModels
 {
@@ -24,8 +26,25 @@ namespace Web.Areas.Admin.ViewModels
         public DateTime CreatedDate { get; set; }
         public DateTime LastLoginDate { get; set; }
         public DateTime LastActivityDate { get; set; }
-        public int UserRole { get; set; }
+        public int? UserRole { get; set; }
         public int? PictureId { get; set; }
-        public Picture? Picture { get; set; }
+        public List<SelectListItem> AvailableActiveTypes { get; set; } = new List<SelectListItem> {
+                new SelectListItem()
+                {
+                    Text = "",
+                    Value = "0",
+                    Selected = true
+                },
+                new SelectListItem()
+                {
+                    Text = "Registerd",
+                    Value = "1"
+                },
+                new SelectListItem()
+                {
+                    Text = "Admin",
+                    Value = "2"
+                }
+         };
     }
 }

@@ -410,13 +410,14 @@ main{
     align-items: center;
     margin-left: 0.5rem;
     margin-right: 0.5rem;
+    margin-top: 0.5rem;
 }
 
 /************  Designs for Tables in Admin Pages     *************/
 table {
     background: var(--color-white);
     width: 100%;
-    border-radius: var(--card-border-radius);
+    border-radius: var(--border-radius-2);
     padding: var(--card-padding);
     text-align: center;
     box-shadow: var(--box-shadow);
@@ -426,9 +427,15 @@ table tbody td {
     height: 2.8rem;
     border-bottom: 1px solid var(--color-light);
     color: var(--color-dark-variant);
+    padding-right: 5px;
+    padding-left: 5px;
 }
 table thead tr {
     height: 2.8rem;
+}
+table th{
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 table tbody tr:last-child td {
@@ -560,8 +567,13 @@ table .material-symbols-outlined{
     font-weight: 600;
 }
 
+/* ================= Form Group ==========*/
+.form-group input, .form-group select{
+    background: var(--color-white);
+    color: var(--color-dark);
+}
 
-/* ================= Media Query ==============*/
+/* ====================================== Media Query ===================================*/
 @media screen and (max-width: 552px) {
     .table-footer{
         display: block;

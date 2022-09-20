@@ -167,6 +167,7 @@ namespace Core.DataTables
         /// Gets or set column collection 
         /// </summary>
         public IList<ColumnProperty> ColumnCollection { get; set; }
+        public string SearchDivClassName { get; set; }
         
         #endregion
     }

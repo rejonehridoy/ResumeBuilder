@@ -14,7 +14,7 @@
         public FilterParameter(string name)
         {
             Name = name;
-            Type = typeof(string);
+            Type = typeof(string).ToString();
         }
 
         /// <summary>
@@ -22,11 +22,11 @@
         /// </summary>
         /// <param name="name">Filter parameter name</param>
         /// <param name="modelName">Filter parameter model name</param>
-        public FilterParameter(string name, string modelName)
+        public FilterParameter(string name, string type, string modelName)
         {
             Name = name;
             ModelName = modelName;
-            Type = typeof(string);
+            Type = typeof(string).ToString();
         }
 
         /// <summary>
@@ -34,7 +34,7 @@
         /// </summary>
         /// <param name="name">Filter parameter name</param>
         /// <param name="type">Filter parameter type</param>
-        public FilterParameter(string name, Type type)
+        public FilterParameter(string name, string type)
         {
             Name = name;
             Type = type;
@@ -48,7 +48,7 @@
         public FilterParameter(string name, object value)
         {
             Name = name;
-            Type = value.GetType();
+            Type = value.GetType().ToString();
             Value = value;
         }
 
@@ -62,7 +62,7 @@
         {
             Name = name;
             ParentName = parentName;
-            Type = typeof(string);
+            Type = typeof(string).ToString();
         }
 
         #endregion
@@ -82,7 +82,7 @@
         /// <summary>
         /// Filter field type
         /// </summary>
-        public Type Type { get; }
+        public string Type { get; }
 
         /// <summary>
         /// Filter field value
