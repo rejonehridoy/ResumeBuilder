@@ -1,17 +1,15 @@
 ﻿using Core;
-using Core.Enums;
-using Data.Files;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Web.Areas.Admin.ViewModels
 {
-    public class UserViewModel : BaseModel
+    public class UserSearchModel : BaseSearchModel
     {
         public string? Uid { get; set; }
         public string? Guid { get; set; }
 
         public string Name { get; set; }
-
+        
         public string? Username { get; set; }
 
         public string Email { get; set; }

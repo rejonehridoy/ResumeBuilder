@@ -3,10 +3,66 @@
 *@
 @{
     ViewData["Title"] = "Create User";
+    ViewBag.Title = "Create New User";
 }
-<h2>This is user view</h2>
 
-<form asp-action="Users">
-    <input type="number" placeholder="Enter your id" />
-    <input type="submit" class="btn btn-primary" />
+@model Web.Areas.Admin.Models.Users.UserModel
+<form class="user-create-form" asp-action="Create" method="post" enctype="multipart/form-data">
+    <div class="menu-option-list user-option-list d-flex justify-content-end">
+        <button type="submit" class="btn btn-success">Save</button>
+        <button type="submit" class="btn btn-success">Save and Continue</button>
+    </div>
+
+    <div class="form-elements">
+        <div class="row">
+            <div class="col-md-4 form-label form-group">
+                <label for="Name">Name</label>
+            </div>
+            <div class="col-md-8 form-group">
+                <input type="text" class="form-control" asp-for="Name">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 form-label form-group">
+                <label for="Email">Email</label>
+            </div>
+            <div class="col-md-8 form-group">
+                <input type="email" class="form-control" asp-for="Email">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 form-label form-group">
+                <label for="Active">Active</label>
+            </div>
+            <div class="col-md-8">
+                <input type="checkbox" asp-for="Active"/>
+                @*@Html.CheckBoxFor(m => m.Active, false)*@
+            </div>
+        </div>
+
+        
+
+        <div class="row">
+            <div class="col-md-4 form-label form-group">
+                <label for="UserRole">User Role</label>
+            </div>
+            <div class="col-md-8 form-group">
+                <select asp-for="UserRole" class="form-control" asp-items="@Model.AvailableActiveTypes"></select>
+                @*@Html.DropDownList("UserRole", Model.AvailableActiveTypes, new { @class = "form-control" })*@
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 form-label form-group">
+                <label for="PicturePath">Profile Picture</label>
+            </div>
+            <div class="col-md-8 form-group">
+                <input type="file" class="form-control" asp-for="PictureFile" accept="image/*">
+            </div>
+        </div>
+        <img src="C:\Users\BS751\Desktop\Hridoy\Projects\ResumeBuilder\Web\wwwroot\images\uploaded\Screenshot 2022-09-14 174727.png" alt="image" />
+
+    </div>
 </form>

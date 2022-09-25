@@ -3,10 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using OA.Repo;
 using Repository;
+using Service.Files;
+using Service.Files.Interfaces;
 using Service.Users;
 using Service.Users.Interfaces;
 using System.Configuration;
 using Web.Areas.Admin;
+using Web.Areas.Admin.Factory;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +26,9 @@ builder.Services.AddDbContext<ResumeBuilderDbContext>(item => item.UseSqlServer(
 // Add Dependency Register 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserModelFactory, UserModelFactory>();
+builder.Services.AddScoped<IPictureService, PictureService>();
+builder.Services.AddScoped<IFileService, FileService>();
 
 var app = builder.Build();
 

@@ -1,11 +1,15 @@
-﻿@model UserViewModel
+﻿@model UserSearchModel
 @using Data.Users;
 <div>This is user table</div>
 @{
     ViewBag.Title = "Users";
     ViewBag.ActiveMenuId = "#menu-users";
 }
-<div class="user-search-section">
+<div class="menu-option-list user-option-list d-flex justify-content-end">
+    <a href="/admin/user/create" class="btn btn-success">Create New</a>
+</div>
+
+<div class="search-section user-search-section">
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
@@ -30,7 +34,7 @@
             <div class="form-group">
                 <label for="UserRole">User Role</label>
                 @Html.DropDownList("UserRole", Model.AvailableActiveTypes, new { @class = "form-control" })
-                <select asp-for="UserRole" asp-items="Model.AvailableActiveTypes" />
+                @*<select asp-for="UserRole" asp-items="Model.AvailableActiveTypes" />*@
             </div>
             <div class="form-group form-check">
                 <input type="checkbox" class="form-check-input" asp-for="Active">
@@ -117,4 +121,4 @@
             Render = Render.Delete
         }
     }
-});
+})

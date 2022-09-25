@@ -15,16 +15,16 @@
 </table>
 <div class="table-footer" id="@Model.Name-footer">
     <div class="pagination">
-        <a href="#">&laquo;</a>
+        @*<a href="#">&laquo;</a>
         <a href="#">1</a>
         <a href="#" class="active">2</a>
         <a href="#">3</a>
         <a href="#">4</a>
         <a href="#">5</a>
-        <a href="#">&raquo;</a>
+        <a href="#">&raquo;</a>*@
     </div>
     <div class="table-result-count">
-        <p>Showing 1 to 10 of <span class="total-table-entries">5</span> entries</p>
+        <p>Showing <spnn class="table-page-start-count"></spnn> to <span class="table-page-end-count"></span> of <span class="total-table-entries"></span> entries</p>
     </div>
 </div>
 @if (!string.IsNullOrEmpty(Model.SearchButtonId))
@@ -57,36 +57,83 @@
         return filterData;
     }
 
-    function setTableData(data) {
+    function setPagination(response)
+    {
+        $('#@Model.Name-footer .pagination').empty();
+        let paginationHtml = '';
+        if(response.currentPage > 1){
+            paginationHtml += `<a class="page-link" onClick="readTableData(1);">&laquo</a>`;
+            let previousPage = response.currentPage - 1;
+            paginationHtml += `<a class="page-link" onClick="readTableData(${previousPage})">&lt</a>`;
+        }
+        for(var page = response.startPage; page<= response.endPage; page++)
+        {
+            if(page == response.currentPage){
+                paginationHtml += `<a class="page-link active" onClick="readTableData(${page})">${page}</a>`;
+            }else{
+                paginationHtml += `<a class="page-link" onClick="readTableData(${page})">${page}</a>`;
+            }
+        }
+        if(response.currentPage < response.totalPages){
+            let nextPage = response.currentPage + 1;
+            paginationHtml += `<a class="page-link" onClick="readTableData(${nextPage})">&gt</a>`;
+            paginationHtml += `<a class="page-link" onClick="readTableData(${response.totalPages})">&raquo</a>`;
+        }
+
+        $('#@Model.Name-footer .pagination').append(paginationHtml);
+    }
+
+    function setPageItemCounts(currentPage, pageSize, totalItems)
+    {
+        $('#@Model.Name-footer .total-table-entries').html(totalItems);
+
+        if(currentPage == 1){
+            $('#@Model.Name-footer .table-page-start-count').html(1);
+            $('#@Model.Name-footer .table-page-end-count').html(pageSize);
+        }else{
+            let startPageItem = (currentPage - 1) * pageSize;
+            let endPageItem = startPageItem + pageSize;
+            $('#@Model.Name-footer .table-page-start-count').html(startPageItem);
+            if(totalItems < endPageItem){
+                $('#@Model.Name-footer .table-page-end-count').html(totalItems);
+            }else{
+                $('#@Model.Name-footer .table-page-end-count').html(endPageItem);
+            }
+        }
+    }
+
+    function setTableData(response) {
         $('#@Model.Name tbody').empty();
         var tableRows = '';
-        for (var rowIndex in data) {
+        for (var rowIndex in response.data) {
             tableRows += '<tr>';
             for (var index in columns) {
                 if (columns[index] == "id") {
                     if (columnsTypes[index] == @Json.Serialize((int)Render.Edit)) {
-                        tableRows += `<td><a class="btn btn-secondary" href="/admin/@Model.UrlUpdate.ControllerName/@Model.UrlUpdate.ActionName?${columns[index]}=${data[rowIndex][columns[index]]}">${columnsTitles[index]}</a></td>`;
+                        tableRows += `<td><a class="btn btn-secondary" href="/admin/@Model.UrlUpdate.ControllerName/@Model.UrlUpdate.ActionName?${columns[index]}=${response.data[rowIndex][columns[index]]}">${columnsTitles[index]}</a></td>`;
                     } else if (columnsTypes[index] == @Json.Serialize((int)Render.Delete)) {
-                        tableRows += `<td><a class="btn btn-danger" onClick="tableDataDelete(this);" data-url="/admin/@Model.UrlDelete.ControllerName/@Model.UrlDelete.ActionName" data-id="${data[rowIndex][columns[index]]}">${columnsTitles[index]}</a></td>`;
+                        tableRows += `<td><a class="btn btn-danger" onClick="tableDataDelete(this);" data-url="/admin/@Model.UrlDelete.ControllerName/@Model.UrlDelete.ActionName" data-id="${response.data[rowIndex][columns[index]]}">${columnsTitles[index]}</a></td>`;
                     } else if (columnsTypes[index] == @Json.Serialize((int)Render.Data)) {
-                        tableRows += '<td>' + data[rowIndex][columns[index]] + '</td>';
+                        tableRows += '<td>' + response.data[rowIndex][columns[index]] + '</td>';
                     }
                 } else {
-                    if (typeof (data[rowIndex][columns[index]]) == "boolean") {
-                        if (data[rowIndex][columns[index]] == true)
-                            tableRows += '<td><span style="color:green;" class="material-symbols-outlined">check_circle</span></td > ';
+                    if (typeof (response.data[rowIndex][columns[index]]) == "boolean") {
+                        if (response.data[rowIndex][columns[index]] == true)
+                            tableRows += '<td><span style="color:green;" class="material-symbols-outlined">check_circle</span></td >';
                         else {
-                            tableRows += '<td><span style="color:red;" class="material-symbols-outlined">cancel</span></td > ';
+                            tableRows += '<td><span style="color:red;" class="material-symbols-outlined">cancel</span></td >';
                         }
                     } else {
-                        tableRows += '<td>' + data[rowIndex][columns[index]] + '</td>';
+                        tableRows += '<td>' + response.data[rowIndex][columns[index]] + '</td>';
                     }
                 }
             }
-            tableRows += '</tr>'
+            tableRows += '</tr>';
         }
-        $('#@Model.Name-footer .total-table-entries').html(data.length);
+        
         $('#@Model.Name tbody').append(tableRows);
+        setPageItemCounts(response.currentPage, response.pageSize, response.totalItems);
+        setPagination(response);
 
     }
 
@@ -108,17 +155,24 @@
             });
         }
     }
-    function readTableData()
+    function readTableData(page)
     {
         let data = getSearchFilterData();
+        if(page != undefined && page != null){
+            data['currentPage'] = page;
+        }else{
+            data['currentPage'] = 1;
+        }
+        
         $.ajax({
             url: "@Model.UrlRead.ActionName",
             type: "GET",
             contentType: "application/json",
             data: data,
-            success: function (data, textStatus, jqXHR) {
-                if (data != null && data != undefined) {
-                    setTableData(data);
+            success: function (response, textStatus, jqXHR) {
+                if (response != null && response != undefined) {
+                    console.log('response:',response);
+                    setTableData(response);
                     
                 } else {
                     alert('Data not found');

@@ -42,7 +42,6 @@
     margin: 0;
     padding: 0;
     outline: 0;
-    appearance: none;
     border: 0;
     text-decoration: none;
     list-style: none;
@@ -572,6 +571,39 @@ table .material-symbols-outlined{
     background: var(--color-white);
     color: var(--color-dark);
 }
+
+.form-elements .form-label{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+/*for only file type */
+input[type="file"] {
+    height: auto !important;
+    background: var(--color-white);
+    color: var(--color-dark);
+}
+
+label{
+    margin-bottom: 0px;
+}
+/* ================ Search Section ==============*/
+.search-section {
+    background: var(--color-white);
+    width: 100%;
+    border-radius: var(--border-radius-2);
+    padding: var(--card-padding);
+    margin-bottom: 10px;
+    box-shadow: var(--box-shadow);
+}
+
+.menu-option-list{
+    margin: 10px 5px;
+    gap: 0.5rem;
+}
+
+
 
 /* ====================================== Media Query ===================================*/
 @media screen and (max-width: 552px) {
