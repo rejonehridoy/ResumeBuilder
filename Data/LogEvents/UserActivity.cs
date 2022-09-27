@@ -15,6 +15,6 @@ namespace Data.LogEvents
         public string? ShortMessage { get; set; }
         public string? FullMessage { get; set; }
         public DateTime CreatedDate { get; set; }
-        public User? User { get; set; } 
+        public User? User { get; set; }
     }
 }

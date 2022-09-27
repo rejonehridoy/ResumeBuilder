@@ -21,6 +21,10 @@ namespace Data.Users
         public string? Username { get; set; }
         [Required]
         public string Email { get; set; }
+        [Column(TypeName = "nvarchar(15)")]
+        public string? Gender { get; set; }
+        public DateTime? DateOfBirth { get; set; }
+
         [Column(TypeName = "bit")]
         public bool Active { get; set; }
         [Column(TypeName = "bit")]

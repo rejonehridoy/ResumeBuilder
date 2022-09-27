@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
@@ -11,9 +12,10 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(ResumeBuilderDbContext))]
-    partial class ResumeBuilderDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220927181830_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,7 +35,7 @@ namespace Repository.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 27, 19, 12, 21, 773, DateTimeKind.Utc).AddTicks(9465));
+                        .HasDefaultValue(new DateTime(2022, 9, 27, 18, 18, 30, 105, DateTimeKind.Utc).AddTicks(8680));
 
                     b.Property<string>("DirectoryPath")
                         .HasColumnType("nvarchar(max)");
@@ -80,78 +82,6 @@ namespace Repository.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Picture", "dbo");
-                });
-
-            modelBuilder.Entity("Data.HomePage.MenuItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("DisplayOrder")
-                        .HasColumnType("int");
-
-                    b.Property<string>("DisplayText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("HasSubMenu")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ParentMenuId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Published")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Url")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("MenuItem", "dbo");
-                });
-
-            modelBuilder.Entity("Data.HomePage.Topic", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 27, 19, 12, 21, 774, DateTimeKind.Utc).AddTicks(223));
-
-                    b.Property<int>("DisplayOrder")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GroupId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Icons")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Published")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Text")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Topic", "dbo");
                 });
 
             modelBuilder.Entity("Data.Language.Language", b =>
@@ -256,7 +186,7 @@ namespace Repository.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 27, 19, 12, 21, 773, DateTimeKind.Utc).AddTicks(8939));
+                        .HasDefaultValue(new DateTime(2022, 9, 27, 18, 18, 30, 105, DateTimeKind.Utc).AddTicks(7806));
 
                     b.Property<string>("FullMessage")
                         .HasColumnType("nvarchar(max)");
@@ -297,7 +227,7 @@ namespace Repository.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 27, 19, 12, 21, 773, DateTimeKind.Utc).AddTicks(9044));
+                        .HasDefaultValue(new DateTime(2022, 9, 27, 18, 18, 30, 105, DateTimeKind.Utc).AddTicks(7972));
 
                     b.Property<string>("FullMessage")
                         .HasColumnType("nvarchar(max)");
@@ -344,7 +274,7 @@ namespace Repository.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 27, 19, 12, 21, 773, DateTimeKind.Utc).AddTicks(9574));
+                        .HasDefaultValue(new DateTime(2022, 9, 27, 18, 18, 30, 105, DateTimeKind.Utc).AddTicks(8862));
 
                     b.Property<DateTime?>("DontSendBeforeDate")
                         .HasColumnType("datetime2");
@@ -426,28 +356,6 @@ namespace Repository.Migrations
                     b.ToTable("ScheduleTask", "dbo");
                 });
 
-            modelBuilder.Entity("Data.Settings.SearchTerm", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("Count")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
-
-                    b.Property<string>("Keyword")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SearchTerm", "dbo");
-                });
-
             modelBuilder.Entity("Data.Settings.Setting", b =>
                 {
                     b.Property<int>("Id")
@@ -510,7 +418,7 @@ namespace Repository.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 27, 19, 12, 21, 773, DateTimeKind.Utc).AddTicks(9814));
+                        .HasDefaultValue(new DateTime(2022, 9, 27, 18, 18, 30, 105, DateTimeKind.Utc).AddTicks(9250));
 
                     b.Property<int>("DisplayOrder")
                         .HasColumnType("int");
@@ -545,7 +453,7 @@ namespace Repository.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 27, 19, 12, 21, 773, DateTimeKind.Utc).AddTicks(9686));
+                        .HasDefaultValue(new DateTime(2022, 9, 27, 18, 18, 30, 105, DateTimeKind.Utc).AddTicks(9083));
 
                     b.Property<int>("DisplayOrder")
                         .HasColumnType("int");
@@ -646,7 +554,7 @@ namespace Repository.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 27, 19, 12, 21, 774, DateTimeKind.Utc).AddTicks(20));
+                        .HasDefaultValue(new DateTime(2022, 9, 27, 18, 18, 30, 105, DateTimeKind.Utc).AddTicks(9700));
 
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime2");
@@ -678,7 +586,7 @@ namespace Repository.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 27, 19, 12, 21, 773, DateTimeKind.Utc).AddTicks(9920));
+                        .HasDefaultValue(new DateTime(2022, 9, 27, 18, 18, 30, 105, DateTimeKind.Utc).AddTicks(9414));
 
                     b.Property<int>("DisplayOrder")
                         .HasColumnType("int");
@@ -809,7 +717,7 @@ namespace Repository.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 27, 19, 12, 21, 773, DateTimeKind.Utc).AddTicks(8586));
+                        .HasDefaultValue(new DateTime(2022, 9, 27, 18, 18, 30, 105, DateTimeKind.Utc).AddTicks(7293));
 
                     b.Property<DateTime?>("DateOfBirth")
                         .HasColumnType("datetime2");
@@ -873,7 +781,7 @@ namespace Repository.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 27, 19, 12, 21, 773, DateTimeKind.Utc).AddTicks(8806));
+                        .HasDefaultValue(new DateTime(2022, 9, 27, 18, 18, 30, 105, DateTimeKind.Utc).AddTicks(7611));
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -910,7 +818,7 @@ namespace Repository.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 27, 19, 12, 21, 773, DateTimeKind.Utc).AddTicks(9353));
+                        .HasDefaultValue(new DateTime(2022, 9, 27, 18, 18, 30, 105, DateTimeKind.Utc).AddTicks(8520));
 
                     b.Property<int?>("Rating")
                         .HasColumnType("int");
@@ -942,145 +850,6 @@ namespace Repository.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserReview", "dbo");
-                });
-
-            modelBuilder.Entity("Data.UserTemplates.UserTemplateComponent", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<bool>("HasRedirectUrl")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HasSubComponent")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ProfileId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RedirectUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("TemplateSectionId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UniqueTag")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserTemplateSectionId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProfileId");
-
-                    b.HasIndex("TemplateSectionId");
-
-                    b.ToTable("UserTemplateComponent", "dbo");
-                });
-
-            modelBuilder.Entity("Data.UserTemplates.UserTemplateKeyValuePair", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Key")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ProfileId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Required")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("UserTemplateSubComponent")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UserTemplateSubComponentsId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProfileId");
-
-                    b.HasIndex("UserTemplateSubComponentsId");
-
-                    b.ToTable("UserTemplateKeyValuePair", "dbo");
-                });
-
-            modelBuilder.Entity("Data.UserTemplates.UserTemplateSection", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<bool>("HasComponent")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ProfileId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProfileId");
-
-                    b.ToTable("UserTemplateSection", "dbo");
-                });
-
-            modelBuilder.Entity("Data.UserTemplates.UserTemplateSubComponent", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<bool>("HasKeyValuePair")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ProfileId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UniqueTag")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserTemplateComponentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProfileId");
-
-                    b.ToTable("UserTemplateSubComponent", "dbo");
                 });
 
             modelBuilder.Entity("Data.Files.Document", b =>
@@ -1274,62 +1043,6 @@ namespace Repository.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Data.UserTemplates.UserTemplateComponent", b =>
-                {
-                    b.HasOne("Data.Templates.TemplateProfile", "TemplateProfile")
-                        .WithMany()
-                        .HasForeignKey("ProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Data.Templates.TemplateSection", "TemplateSection")
-                        .WithMany()
-                        .HasForeignKey("TemplateSectionId");
-
-                    b.Navigation("TemplateProfile");
-
-                    b.Navigation("TemplateSection");
-                });
-
-            modelBuilder.Entity("Data.UserTemplates.UserTemplateKeyValuePair", b =>
-                {
-                    b.HasOne("Data.Templates.TemplateProfile", "TemplateProfile")
-                        .WithMany()
-                        .HasForeignKey("ProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Data.UserTemplates.UserTemplateSubComponent", "UserTemplateSubComponents")
-                        .WithMany()
-                        .HasForeignKey("UserTemplateSubComponentsId");
-
-                    b.Navigation("TemplateProfile");
-
-                    b.Navigation("UserTemplateSubComponents");
-                });
-
-            modelBuilder.Entity("Data.UserTemplates.UserTemplateSection", b =>
-                {
-                    b.HasOne("Data.Templates.TemplateProfile", "TemplateProfile")
-                        .WithMany()
-                        .HasForeignKey("ProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("TemplateProfile");
-                });
-
-            modelBuilder.Entity("Data.UserTemplates.UserTemplateSubComponent", b =>
-                {
-                    b.HasOne("Data.Templates.TemplateProfile", "TemplateProfile")
-                        .WithMany()
-                        .HasForeignKey("ProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("TemplateProfile");
                 });
 #pragma warning restore 612, 618
         }

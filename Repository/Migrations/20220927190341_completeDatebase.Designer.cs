@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
@@ -11,9 +12,10 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(ResumeBuilderDbContext))]
-    partial class ResumeBuilderDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220927190341_completeDatebase")]
+    partial class completeDatebase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,7 +35,7 @@ namespace Repository.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 27, 19, 12, 21, 773, DateTimeKind.Utc).AddTicks(9465));
+                        .HasDefaultValue(new DateTime(2022, 9, 27, 19, 3, 40, 980, DateTimeKind.Utc).AddTicks(4565));
 
                     b.Property<string>("DirectoryPath")
                         .HasColumnType("nvarchar(max)");
@@ -126,9 +128,7 @@ namespace Repository.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 27, 19, 12, 21, 774, DateTimeKind.Utc).AddTicks(223));
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("DisplayOrder")
                         .HasColumnType("int");
@@ -256,7 +256,7 @@ namespace Repository.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 27, 19, 12, 21, 773, DateTimeKind.Utc).AddTicks(8939));
+                        .HasDefaultValue(new DateTime(2022, 9, 27, 19, 3, 40, 980, DateTimeKind.Utc).AddTicks(2749));
 
                     b.Property<string>("FullMessage")
                         .HasColumnType("nvarchar(max)");
@@ -297,7 +297,7 @@ namespace Repository.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 27, 19, 12, 21, 773, DateTimeKind.Utc).AddTicks(9044));
+                        .HasDefaultValue(new DateTime(2022, 9, 27, 19, 3, 40, 980, DateTimeKind.Utc).AddTicks(3083));
 
                     b.Property<string>("FullMessage")
                         .HasColumnType("nvarchar(max)");
@@ -344,7 +344,7 @@ namespace Repository.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 27, 19, 12, 21, 773, DateTimeKind.Utc).AddTicks(9574));
+                        .HasDefaultValue(new DateTime(2022, 9, 27, 19, 3, 40, 980, DateTimeKind.Utc).AddTicks(4908));
 
                     b.Property<DateTime?>("DontSendBeforeDate")
                         .HasColumnType("datetime2");
@@ -426,28 +426,6 @@ namespace Repository.Migrations
                     b.ToTable("ScheduleTask", "dbo");
                 });
 
-            modelBuilder.Entity("Data.Settings.SearchTerm", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("Count")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
-
-                    b.Property<string>("Keyword")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SearchTerm", "dbo");
-                });
-
             modelBuilder.Entity("Data.Settings.Setting", b =>
                 {
                     b.Property<int>("Id")
@@ -510,7 +488,7 @@ namespace Repository.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 27, 19, 12, 21, 773, DateTimeKind.Utc).AddTicks(9814));
+                        .HasDefaultValue(new DateTime(2022, 9, 27, 19, 3, 40, 980, DateTimeKind.Utc).AddTicks(5548));
 
                     b.Property<int>("DisplayOrder")
                         .HasColumnType("int");
@@ -545,7 +523,7 @@ namespace Repository.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 27, 19, 12, 21, 773, DateTimeKind.Utc).AddTicks(9686));
+                        .HasDefaultValue(new DateTime(2022, 9, 27, 19, 3, 40, 980, DateTimeKind.Utc).AddTicks(5228));
 
                     b.Property<int>("DisplayOrder")
                         .HasColumnType("int");
@@ -646,7 +624,7 @@ namespace Repository.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 27, 19, 12, 21, 774, DateTimeKind.Utc).AddTicks(20));
+                        .HasDefaultValue(new DateTime(2022, 9, 27, 19, 3, 40, 980, DateTimeKind.Utc).AddTicks(6257));
 
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime2");
@@ -678,7 +656,7 @@ namespace Repository.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 27, 19, 12, 21, 773, DateTimeKind.Utc).AddTicks(9920));
+                        .HasDefaultValue(new DateTime(2022, 9, 27, 19, 3, 40, 980, DateTimeKind.Utc).AddTicks(5985));
 
                     b.Property<int>("DisplayOrder")
                         .HasColumnType("int");
@@ -809,7 +787,7 @@ namespace Repository.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 27, 19, 12, 21, 773, DateTimeKind.Utc).AddTicks(8586));
+                        .HasDefaultValue(new DateTime(2022, 9, 27, 19, 3, 40, 980, DateTimeKind.Utc).AddTicks(1775));
 
                     b.Property<DateTime?>("DateOfBirth")
                         .HasColumnType("datetime2");
@@ -873,7 +851,7 @@ namespace Repository.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 27, 19, 12, 21, 773, DateTimeKind.Utc).AddTicks(8806));
+                        .HasDefaultValue(new DateTime(2022, 9, 27, 19, 3, 40, 980, DateTimeKind.Utc).AddTicks(2293));
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -910,7 +888,7 @@ namespace Repository.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 27, 19, 12, 21, 773, DateTimeKind.Utc).AddTicks(9353));
+                        .HasDefaultValue(new DateTime(2022, 9, 27, 19, 3, 40, 980, DateTimeKind.Utc).AddTicks(4138));
 
                     b.Property<int?>("Rating")
                         .HasColumnType("int");

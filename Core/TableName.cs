@@ -17,6 +17,7 @@ namespace Core
         public const string SCHEDULE_TASK = "ScheduleTask";
         public const string SEARCH_TERM = "SearchTerm";
         public const string SETTINGS = "Settings";
+        public const string USER_SETTINGS = "UserSettings";
         public const string TEMPLATE_CATEGORY = "TemplateCategory";
         public const string TEMPLATE = "Template";
         public const string TEMPLATE_TAG = "TemplateTag";

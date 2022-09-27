@@ -36,7 +36,7 @@ namespace Service.Files
             {
                 FileName = file.FileName,
                 DirectoryPath = filePath,
-                MimeType = (int)MimeType.ImagePng,
+                MimeType = file.ContentType,
                 BinaryData = memoryStream.ToArray()
             };
             int pictureId = await pictureService.InsertPictureAsync(picture);

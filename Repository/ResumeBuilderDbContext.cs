@@ -1,8 +1,13 @@
 ﻿using Data.Files;
+using Data.HomePage;
 using Data.Language;
 using Data.LogEvents;
 using Data.Messages;
+using Data.SchedulesTasks;
+using Data.Settings;
+using Data.Templates;
 using Data.Users;
+using Data.UserTemplates;
 using Microsoft.EntityFrameworkCore;
 
 namespace Repository
@@ -42,7 +47,24 @@ namespace Repository
             modelBuilder.Entity<QueuedEmail>()
                         .Property(b => b.CreatedDate)
                         .HasDefaultValue(DateTime.UtcNow);
-
+            modelBuilder.Entity<TemplateCategory>()
+                        .Property(b => b.CreatedDate)
+                        .HasDefaultValue(DateTime.UtcNow);
+            modelBuilder.Entity<Template>()
+                        .Property(b => b.CreatedDate)
+                        .HasDefaultValue(DateTime.UtcNow);
+            modelBuilder.Entity<TemplateSection>()
+                        .Property(b => b.CreatedDate)
+                        .HasDefaultValue(DateTime.UtcNow);
+            modelBuilder.Entity<TemplateProfile>()
+                        .Property(b => b.CreatedDate)
+                        .HasDefaultValue(DateTime.UtcNow);
+            modelBuilder.Entity<SearchTerm>()
+                        .Property(b => b.Count)
+                        .HasDefaultValue(0);
+            modelBuilder.Entity<Topic>()
+                        .Property(b => b.CreatedDate)
+                        .HasDefaultValue(DateTime.UtcNow);
             //modelBuilder.Entity<Child>()
             //.HasRequired(c => c.Parent)
             //.WithMany(p => p.Childs)
@@ -61,6 +83,25 @@ namespace Repository
         DbSet<UserReview> UserReviews { get; set; }
         DbSet<Document> Documents { get; set; }
         DbSet<QueuedEmail> QueuedEmails { get; set; }
+        DbSet<ScheduleTask> ScheduleTasks { get; set; }
+        DbSet<SearchTerm> SearchTerms { get; set; }
+        DbSet<Setting> Settings { get; set; }
+        DbSet<UserSetting> UserSettings { get; set; }
+        DbSet<TemplateCategory> TemplateCategories { get; set; }
+        DbSet<Template> Templates { get; set; }
+        DbSet<TemplateTag> TemplateTags { get; set; }
+        DbSet<TemplateSection> TemplateSections { get; set; }
+        DbSet<TemplateComponent> templateComponents { get; set; }
+        DbSet<TemplateSubComponent> TemplateSubComponents { get; set; }
+        DbSet<TemplateKeyValuePair> TemplateKeyValuePairs { get; set; }
+        DbSet<TemplateProfile> TemplateProfiles { get; set; }
+        DbSet<TemplateSetting> TemplateSettings { get; set; }
+        DbSet<UserTemplateSection> UserTemplateSections { get; set; }
+        DbSet<UserTemplateComponent> UserTemplateComponents { get; set; }
+        DbSet<UserTemplateSubComponent> UserTemplateSubComponents { get; set; }
+        DbSet<UserTemplateKeyValuePair> UserTemplateKeyValuePairs { get; set; }
+        DbSet<MenuItem> MenuItems { get; set; }
+        DbSet<Topic> Topics { get; set; }
 
     }
 }
