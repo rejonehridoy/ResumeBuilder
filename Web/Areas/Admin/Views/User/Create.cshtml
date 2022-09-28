@@ -19,7 +19,9 @@
                 <label for="Name">Name</label>
             </div>
             <div class="col-md-8 form-group">
-                <input type="text" class="form-control" asp-for="Name">
+                <input type="text" class="form-control" asp-for="Name" required>
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                @*<small style="color: red;">Name is Required</small>*@
             </div>
         </div>
 
@@ -34,6 +36,24 @@
 
         <div class="row">
             <div class="col-md-4 form-label form-group">
+                <label for="UserName">UserName</label>
+            </div>
+            <div class="col-md-8 form-group">
+                <input type="text" class="form-control" asp-for="Username">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 form-label form-group">
+                <label for="Password">Password</label>
+            </div>
+            <div class="col-md-8 form-group">
+                <input type="password" class="form-control" asp-for="PasswordModel.Password">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 form-label form-group">
                 <label for="Active">Active</label>
             </div>
             <div class="col-md-8">
@@ -42,15 +62,31 @@
             </div>
         </div>
 
-        
-
         <div class="row">
             <div class="col-md-4 form-label form-group">
                 <label for="UserRole">User Role</label>
             </div>
             <div class="col-md-8 form-group">
-                <select asp-for="UserRole" class="form-control" asp-items="@Model.AvailableActiveTypes"></select>
+                <select asp-for="UserRole" class="form-control" asp-items="@Model.AvailableUserRoles"></select>
                 @*@Html.DropDownList("UserRole", Model.AvailableActiveTypes, new { @class = "form-control" })*@
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 form-label form-group">
+                <label for="Gender">Gender</label>
+            </div>
+            <div class="col-md-8 form-group">
+                <select asp-for="Gender" class="form-control" asp-items="@Model.AvailableGender"></select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 form-label form-group">
+                <label for="DateOfBirth">Date Of Birth</label>
+            </div>
+            <div class="col-md-8 form-group">
+                <input type="date" class="form-control" asp-for="DateOfBirth">
             </div>
         </div>
 
@@ -62,7 +98,7 @@
                 <input type="file" class="form-control" asp-for="PictureFile" accept="image/*">
             </div>
         </div>
-        <img src="C:\Users\BS751\Desktop\Hridoy\Projects\ResumeBuilder\Web\wwwroot\images\uploaded\Screenshot 2022-09-14 174727.png" alt="image" />
+        @*<img src="~/images/uploaded/Screenshot_2022-09-14_174727.png" alt="image" />*@
 
     </div>
 </form>

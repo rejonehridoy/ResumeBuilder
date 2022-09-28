@@ -10,5 +10,6 @@ namespace Service.Files.Interfaces
     public interface IPictureService
     {
         Task<int> InsertPictureAsync(Picture picture);
+        Task<bool> IsPictureExistByFileName(string fileName);
     }
 }

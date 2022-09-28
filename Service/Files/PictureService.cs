@@ -17,5 +17,11 @@ namespace Service.Files
             await pictureRepository.InsertAsync(picture);
             return picture.Id;
         }
+
+        public async Task<bool> IsPictureExistByFileName(string fileName)
+        {
+            var picture = (await pictureRepository.GetAllAsync()).Where(p => p.FileName == fileName).FirstOrDefault();
+            return picture != null ? true : false;
+        }
     }
 }

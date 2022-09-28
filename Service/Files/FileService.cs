@@ -24,7 +24,19 @@ namespace Service.Files
 
         public async Task<int> SavePictureFileAsync(IFormFile file)
         {
-            var filePath = Path.Combine(environment.ContentRootPath, "wwwroot/images/uploaded", file.FileName);
+            int fileCopy = 1;
+            string tempCopy = "";
+            string fileExtention = file.FileName.Split('.').Last();
+            string fileName = (file.FileName.Split('.').First()).Replace(" ","_");
+            string tempFileName = fileName + tempCopy + "." + fileExtention;
+            while (await pictureService.IsPictureExistByFileName(tempFileName))
+            {
+                tempCopy = "_Copy(" + fileCopy + ")";
+                fileCopy++;
+                tempFileName = fileName + tempCopy + "." + fileExtention;
+            }
+            fileName = fileName + tempCopy + "." + fileExtention;
+            var filePath = Path.Combine(environment.ContentRootPath, "wwwroot/images/uploaded", fileName);
             using var fileStream = new FileStream(filePath, FileMode.Create);
             await file.CopyToAsync(fileStream);
 
@@ -34,8 +46,8 @@ namespace Service.Files
 
             var picture = new Picture
             {
-                FileName = file.FileName,
-                DirectoryPath = filePath,
+                FileName = fileName,
+                DirectoryPath = "/images/uploaded/" + fileName,
                 MimeType = file.ContentType,
                 BinaryData = memoryStream.ToArray()
             };
