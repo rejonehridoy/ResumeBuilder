@@ -572,6 +572,14 @@ table .material-symbols-outlined{
     color: var(--color-dark);
 }
 
+.form-elements {
+    background: var(--color-white);
+    width: 100%;
+    border-radius: var(--border-radius-2);
+    padding: var(--card-padding);
+    margin-bottom: 10px;
+    box-shadow: var(--box-shadow);
+}
 .form-elements .form-label{
     display: flex;
     justify-content: end;
@@ -603,8 +611,17 @@ label{
     gap: 0.5rem;
 }
 
-
-
+/*============== Picture Design============*/
+.thumb {
+    height: 75px;
+    border: 1px solid var(--color-dark);
+    margin: 10px 5px 0 0;
+}
+.picture-upload{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
 /* ====================================== Media Query ===================================*/
 @media screen and (max-width: 552px) {
     .table-footer{
@@ -730,6 +747,10 @@ label{
     }
     .page-header-top{
         display: none;
+    }
+
+    .form-elements .form-label{
+        justify-content: start;
     }
 
  }

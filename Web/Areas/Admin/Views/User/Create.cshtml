@@ -1,12 +1,9 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Web.Areas.Admin.Models.Users.UserModel
 @{
     ViewData["Title"] = "Create User";
     ViewBag.Title = "Create New User";
 }
 
-@model Web.Areas.Admin.Models.Users.UserModel
 <form class="user-create-form" asp-action="Create" method="post" enctype="multipart/form-data">
     <div class="menu-option-list user-option-list d-flex justify-content-end">
         <button type="submit" class="btn btn-success">Save</button>
@@ -36,7 +33,7 @@
 
         <div class="row">
             <div class="col-md-4 form-label form-group">
-                <label for="UserName">UserName</label>
+                <label for="Username">UserName</label>
             </div>
             <div class="col-md-8 form-group">
                 <input type="text" class="form-control" asp-for="Username">
@@ -48,7 +45,7 @@
                 <label for="Password">Password</label>
             </div>
             <div class="col-md-8 form-group">
-                <input type="password" class="form-control" asp-for="PasswordModel.Password">
+                <input type="password" class="form-control" asp-for="PasswordModel.Password" required>
             </div>
         </div>
 
@@ -94,11 +91,39 @@
             <div class="col-md-4 form-label form-group">
                 <label for="PicturePath">Profile Picture</label>
             </div>
-            <div class="col-md-8 form-group">
-                <input type="file" class="form-control" asp-for="PictureFile" accept="image/*">
+            <div class="col-md-8 form-group picture-upload">
+                <output id="output-picture">
+                    <span>
+                        <img class="thumb" src="/images/admin/no-image-icon.png" />
+                    </span>
+                </output>
+                <input type="file" id="picture-file" class="form-control" asp-for="PictureFile" accept="image/*">
             </div>
         </div>
-        @*<img src="~/images/uploaded/Screenshot_2022-09-14_174727.png" alt="image" />*@
 
     </div>
 </form>
+
+<script asp-location="Footer">
+    function handleFileSelect(evt) {
+        var file = evt.target.files[0];
+
+        let outputPicture = document.getElementById("output-picture");
+        outputPicture.innerHTML = `<span><img class="thumb" src="/images/admin/no-image-icon.png" /></span>`;
+
+        if (file != 'undefined') {
+            var reader = new FileReader();
+
+            // Closure to capture the file information.
+            reader.onload = (function (theFile) {
+                return function (e) {
+                    outputPicture.innerHTML = `<span><img class="thumb" src="${e.target.result}" title="${escape(theFile.name)}"/></span>`;
+                };
+            })(file);
+
+            // Read in the image file as a data URL.
+            reader.readAsDataURL(file);
+        }
+    }
+    document.getElementById('picture-file').addEventListener('change', handleFileSelect, false);
+</script>
