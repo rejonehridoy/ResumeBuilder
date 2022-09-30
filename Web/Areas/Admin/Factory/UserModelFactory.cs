@@ -1,4 +1,5 @@
-﻿using Service.Users.Interfaces;
+﻿using Data.Users;
+using Service.Users.Interfaces;
 using Web.Areas.Admin.Models.Users;
 using Web.Areas.Admin.ViewModels;
 
@@ -48,10 +49,12 @@ namespace Web.Areas.Admin.Factory
                 Guid = u.Guid,
                 Active  = u.Active,
                 Deleted = u.Deleted,
+                Gender = u.Gender,
+                DateOfBirth = u.DateOfBirth,
                 LastIpAddress = u.LastIpAddress,
                 CreatedDate = u.CreatedDate,
-                LastActivityDate = u.LastActivityDate,
-                LastLoginDate = u.LastLoginDate,
+                LastActivityDate = u.LastActivityDate ?? u.LastActivityDate.Value,
+                LastLoginDate = u.LastLoginDate ?? u.LastLoginDate.Value,
                 PictureId = u.PictureId
             }).ToList();
 
@@ -66,6 +69,11 @@ namespace Web.Areas.Admin.Factory
             model = model.Skip(resultSkipCount).Take(userListModel.PageSize).ToList();
             userListModel.Data = model;
             return userListModel;
+        }
+
+        public User PrepareUserFromUserModel(UserModel userModel)
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }

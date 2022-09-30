@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using OA.Repo;
 using Repository;
+using Service.Common;
+using Service.Common.Interfaces;
 using Service.Files;
 using Service.Files.Interfaces;
 using Service.Users;
@@ -24,11 +26,13 @@ builder.Services.Configure<RazorViewEngineOptions>(options =>
 builder.Services.AddDbContext<ResumeBuilderDbContext>(item => item.UseSqlServer(builder.Configuration.GetConnectionString("resumeBuilderConnection")));
 
 // Add Dependency Register 
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserModelFactory, UserModelFactory>();
 builder.Services.AddScoped<IPictureService, PictureService>();
 builder.Services.AddScoped<IFileService, FileService>();
+builder.Services.AddScoped<IWorkContext, WorkContext>();
 
 var app = builder.Build();
 

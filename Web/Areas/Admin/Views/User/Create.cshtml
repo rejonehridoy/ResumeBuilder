@@ -6,10 +6,30 @@
 
 <form class="user-create-form" asp-action="Create" method="post" enctype="multipart/form-data">
     <div class="menu-option-list user-option-list d-flex justify-content-end">
-        <button type="submit" class="btn btn-success">Save</button>
-        <button type="submit" class="btn btn-success">Save and Continue</button>
+        <button type="submit" name="save" value="save" class="btn btn-success">Save</button>
+        <button type="submit" name="save" value="save-continue" class="btn btn-success">Save and Continue</button>
     </div>
 
+    @if (Model.SuccessMessage.Count > 0)
+    {
+        foreach (var successMessage in Model.ModelError)
+        {
+            <div class="alert alert-success alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                @successMessage
+            </div>
+        }
+    }
+    
+    @if(Model.ModelError.Count > 0){
+        foreach(var errorMessage in Model.ModelError){
+            <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                @errorMessage
+            </div>
+        }
+    }
+    
     <div class="form-elements">
         <div class="row">
             <div class="col-md-4 form-label form-group">
@@ -27,7 +47,7 @@
                 <label for="Email">Email</label>
             </div>
             <div class="col-md-8 form-group">
-                <input type="email" class="form-control" asp-for="Email">
+                <input type="email" class="form-control" asp-for="Email" required>
             </div>
         </div>
 
@@ -45,7 +65,7 @@
                 <label for="Password">Password</label>
             </div>
             <div class="col-md-8 form-group">
-                <input type="password" class="form-control" asp-for="PasswordModel.Password" required>
+                <input type="password" class="form-control" asp-for="Password" required>
             </div>
         </div>
 

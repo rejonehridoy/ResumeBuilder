@@ -34,8 +34,8 @@ namespace Data.Users
         [Column(TypeName = "nvarchar(100)")]
         public string? LastIpAddress { get; set; }
         public DateTime CreatedDate { get; set; }
-        public DateTime LastLoginDate { get; set; }
-        public DateTime LastActivityDate { get; set; }
+        public DateTime? LastLoginDate { get; set; }
+        public DateTime? LastActivityDate { get; set; }
         public int UserRole { get; set; }
         [ForeignKey(TableName.PICTURE)]
         public int? PictureId { get; set; }

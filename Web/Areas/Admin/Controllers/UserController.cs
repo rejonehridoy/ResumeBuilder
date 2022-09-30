@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Data.Users;
+using Microsoft.AspNetCore.Mvc;
 using Nop.Core.Infrastructure;
+using Service.Common.Interfaces;
 using Service.Files.Interfaces;
 using Service.Users.Interfaces;
 using Web.Areas.Admin.Factory;
@@ -15,14 +17,17 @@ namespace Web.Areas.Admin.Controllers
         private readonly IUserService userService;
         private readonly IUserModelFactory userModelFactory;
         private readonly IFileService fileService;
+        private readonly IWorkContext workContext;
 
         public UserController(IUserService userService,
             IUserModelFactory userModelFactory,
-            IFileService fileService)
+            IFileService fileService,
+            IWorkContext workContext)
         {
             this.userService = userService;
             this.userModelFactory = userModelFactory;
             this.fileService = fileService;
+            this.workContext = workContext;
         }
         public IActionResult List()
         {
@@ -36,14 +41,62 @@ namespace Web.Areas.Admin.Controllers
             return View(model);
         }
         [HttpPost]
-        public async Task<IActionResult> Create(UserModel model)
+        public async Task<IActionResult> Create(UserModel model,string save)
         {
-            int pictureId = 0;
-            if(model != null && model.PictureFile != null)
+            if(model != null)
             {
-                pictureId = await fileService.SavePictureFileAsync(model.PictureFile);
+                model.ModelError = new List<string>();
+
+                if (await userService.IsUserExistByEmailAsync(model.Email))
+                {
+                    model.ModelError.Add("Email already exist");
+                    return View(model);
+                }
+                try
+                {
+                    Guid id = Guid.NewGuid();
+                    User user = new User
+                    {
+                        Name = model.Name,
+                        Email = model.Email,
+                        Username = model.Username,
+                        Guid = id.ToString(),
+                        Active = model.Active,
+                        UserRole = model.UserRole,
+                        Gender = model.Gender,
+                        DateOfBirth = model.DateOfBirth,
+                        Deleted = false,
+                        LastIpAddress = workContext.GetCurrentClientIpAddress(),
+                        PictureId = model.PictureFile != null ? await fileService.SavePictureFileAsync(model.PictureFile) : null,
+                    };
+                    var userId = await userService.CreateNewUserAsync(user);
+                    if(userId <= 0)
+                    {
+                        model.ModelError.Add("Account can't be created");
+                        return View(model);
+                    }
+                    if(await userService.CreateUserHashedPasswordAsync(userId, model.Password))
+                        return save.Equals("save") ? RedirectToAction("List") : RedirectToAction("Edit", new { id = userId });
+                    else
+                    {
+                        model.ModelError.Add("Couldn't create password");
+                        return View(model);
+                    }
+                }
+                catch(Exception ex)
+                {
+                    model.ModelError.Add(ex.Message);
+                    return View(model);
+                }
+                
             }
-            return Content("User id:" + pictureId.ToString());
+            else
+            {
+                model = new UserModel();
+                model.ModelError = new List<string>();
+                model.ModelError.Add("Invalid Action Occured. Please try again");
+                return View(model);
+            }
         }
         public async Task<IActionResult> GetUsers(UserSearchModel searchModel)
         {

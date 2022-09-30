@@ -27,14 +27,14 @@ namespace Web.Areas.Admin.Models.Users
 
         public string? LastIpAddress { get; set; }
         public DateTime CreatedDate { get; set; }
-        public DateTime LastLoginDate { get; set; }
-        public DateTime LastActivityDate { get; set; }
+        public DateTime? LastLoginDate { get; set; }
+        public DateTime? LastActivityDate { get; set; }
         [Required]
         public int UserRole { get; set; }
         public string SelectRole { get; set; }
         public int? PictureId { get; set; }
         public IFormFile PictureFile { get; set; }
-        public UserPasswordModel PasswordModel { get; set; } = new UserPasswordModel();
+        public string Password { get; set; }
         public List<SelectListItem> AvailableActiveTypes { get; set; } = new List<SelectListItem> {
                 new SelectListItem()
                 {

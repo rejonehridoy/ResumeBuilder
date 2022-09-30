@@ -19,11 +19,7 @@
             <div class="form-group">
                 <label for="Email">Email</label>
                 <input type="email" class="form-control" asp-for="Email">
-                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-            </div>
-            <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                @*<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>*@
             </div>
         </div>
         <div class="col-md-6">
@@ -35,10 +31,6 @@
                 <label for="UserRole">User Role</label>
                 @Html.DropDownList("UserRole", Model.AvailableActiveTypes, new { @class = "form-control" })
                 @*<select asp-for="UserRole" asp-items="Model.AvailableActiveTypes" />*@
-            </div>
-            <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" asp-for="Active">
-                <label class="form-check-label" asp-for="Active">Active</label>
             </div>
         </div>
     </div>

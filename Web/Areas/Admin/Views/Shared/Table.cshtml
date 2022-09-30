@@ -86,20 +86,25 @@
     function setPageItemCounts(currentPage, pageSize, totalItems)
     {
         $('#@Model.Name-footer .total-table-entries').html(totalItems);
-
-        if(currentPage == 1){
-            $('#@Model.Name-footer .table-page-start-count').html(1);
-            $('#@Model.Name-footer .table-page-end-count').html(pageSize);
-        }else{
-            let startPageItem = (currentPage - 1) * pageSize;
-            let endPageItem = startPageItem + pageSize;
-            $('#@Model.Name-footer .table-page-start-count').html(startPageItem);
-            if(totalItems < endPageItem){
-                $('#@Model.Name-footer .table-page-end-count').html(totalItems);
-            }else{
-                $('#@Model.Name-footer .table-page-end-count').html(endPageItem);
+        if(totalItems > 0){
+            if (currentPage == 1) {
+                $('#@Model.Name-footer .table-page-start-count').html(1);
+                $('#@Model.Name-footer .table-page-end-count').html(pageSize);
+            } else {
+                let startPageItem = (currentPage - 1) * pageSize;
+                let endPageItem = startPageItem + pageSize;
+                $('#@Model.Name-footer .table-page-start-count').html(startPageItem);
+                if (totalItems < endPageItem) {
+                    $('#@Model.Name-footer .table-page-end-count').html(totalItems);
+                } else {
+                    $('#@Model.Name-footer .table-page-end-count').html(endPageItem);
+                }
             }
+        }else{
+            $('#@Model.Name-footer .table-page-start-count').html("0");
+            $('#@Model.Name-footer .table-page-end-count').html("0");
         }
+        
     }
 
     function setTableData(response) {
