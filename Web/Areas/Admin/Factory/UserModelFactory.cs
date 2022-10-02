@@ -53,8 +53,8 @@ namespace Web.Areas.Admin.Factory
                 DateOfBirth = u.DateOfBirth,
                 LastIpAddress = u.LastIpAddress,
                 CreatedDate = u.CreatedDate,
-                LastActivityDate = u.LastActivityDate ?? u.LastActivityDate.Value,
-                LastLoginDate = u.LastLoginDate ?? u.LastLoginDate.Value,
+                LastActivityDate = u.LastActivityDate ?? u.LastActivityDate,
+                LastLoginDate = u.LastLoginDate ?? u.LastLoginDate,
                 PictureId = u.PictureId
             }).ToList();
 
@@ -62,7 +62,7 @@ namespace Web.Areas.Admin.Factory
             {
                 searchModel.CurrentPage = 1;
             }
-            const int pageSize = 2;
+            const int pageSize = 10;
             int resultCount = model.Count();
             userListModel.InitializePager(resultCount, searchModel.CurrentPage, pageSize);
             int resultSkipCount = (searchModel.CurrentPage - 1) * pageSize;

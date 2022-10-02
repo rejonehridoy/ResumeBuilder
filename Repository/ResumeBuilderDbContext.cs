@@ -23,6 +23,12 @@ namespace Repository
             modelBuilder.Entity<User>()
                         .Property(b => b.CreatedDate)
                         .HasDefaultValue(DateTime.UtcNow);
+            modelBuilder.Entity<User>()
+                        .Property(b => b.IsLocked)
+                        .HasDefaultValue(false);
+            modelBuilder.Entity<User>()
+                        .Property(b => b.RequireReLogin)
+                        .HasDefaultValue(false);
             modelBuilder.Entity<UserPassword>()
                         .Property(b => b.CreatedDate)
                         .HasDefaultValue(DateTime.UtcNow);

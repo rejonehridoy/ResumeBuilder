@@ -6,8 +6,8 @@
 
 <form class="user-create-form" asp-action="Create" method="post" enctype="multipart/form-data">
     <div class="menu-option-list user-option-list d-flex justify-content-end">
-        <button type="submit" name="save" value="save" class="btn btn-success">Save</button>
-        <button type="submit" name="save" value="save-continue" class="btn btn-success">Save and Continue</button>
+        <button type="submit" name="save" value="save" class="btn btn-success"><span class="material-symbols-outlined">save</span><span>Save</span></button>
+        <button type="submit" name="save" value="save-continue" class="btn btn-success"><span class="material-symbols-outlined">save_as</span><span>Save and Continue</span></button>
     </div>
 
     @if (Model.SuccessMessage.Count > 0)

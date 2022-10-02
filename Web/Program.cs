@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using OA.Repo;
 using Repository;
+using Service.Caching;
 using Service.Common;
 using Service.Common.Interfaces;
 using Service.Files;
@@ -27,7 +28,9 @@ builder.Services.AddDbContext<ResumeBuilderDbContext>(item => item.UseSqlServer(
 
 // Add Dependency Register 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddMemoryCache();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<IStaticCacheManager, StaticCacheManager>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserModelFactory, UserModelFactory>();
 builder.Services.AddScoped<IPictureService, PictureService>();

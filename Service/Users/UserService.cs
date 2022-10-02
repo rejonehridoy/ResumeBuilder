@@ -1,5 +1,6 @@
 ﻿using Data.Users;
 using OA.Repo;
+using Service.Caching;
 using Service.Users.Interfaces;
 using System.Web.Helpers;
 
@@ -9,17 +10,27 @@ namespace Service.Users
     {
         private readonly IRepository<User> userRepository;
         private readonly IRepository<UserPassword> userPasswordRepository;
+        private readonly IStaticCacheManager staticCacheManager;
 
         public UserService(IRepository<User> userRepository,
-            IRepository<UserPassword> userPasswordRepository)
+            IRepository<UserPassword> userPasswordRepository,
+            IStaticCacheManager staticCacheManager)
         {
             this.userRepository = userRepository;
             this.userPasswordRepository = userPasswordRepository;
+            this.staticCacheManager = staticCacheManager;
         }
         #region Methods
+        #region User
         public async Task<List<User>> GetAllUsersAsync()
         {
-            return await userRepository.GetAllAsync();
+            string cacheKey = staticCacheManager.PrepareCacheKey(UserDefaults.AllUsersKey);
+            var allUsers = staticCacheManager.Get(cacheKey, async () =>
+                {
+                    return await userRepository.GetAllAsync();
+                }
+            );
+            return await allUsers;
         }
         public async Task<int> CreateNewUserAsync(User user)
         {
@@ -31,6 +42,7 @@ namespace Service.Users
             var existUser = (await userRepository.GetAllAsync()).Where(u => u.Email == email);
             return existUser.Any();
         }
+        #endregion
 
         #region User Password
         public async Task<bool> CreateUserHashedPasswordAsync(int userId, string plainPassword)

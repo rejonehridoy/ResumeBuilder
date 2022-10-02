@@ -39,6 +39,9 @@ namespace Data.Users
         public int UserRole { get; set; }
         [ForeignKey(TableName.PICTURE)]
         public int? PictureId { get; set; }
+        public bool RequireReLogin { get; set; }
+        public bool IsLocked { get; set; }
+        public DateTime? LockDurationTime { get; set; }
         public Picture? Picture { get; set; }
 
 

@@ -611,6 +611,14 @@ label{
     gap: 0.5rem;
 }
 
+.menu-option-list button, .menu-option-list a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+
 /*============== Picture Design============*/
 .thumb {
     height: 75px;
