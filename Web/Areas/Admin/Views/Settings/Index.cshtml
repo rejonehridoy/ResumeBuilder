@@ -1,0 +1,66 @@
+﻿@model Web.Areas.Admin.Models.SettingsModel
+@{
+    ViewData["Title"] = "Settings";
+    ViewBag.Title = "Settings";
+}
+
+
+<form class="settings-form" asp-action="Index" method="post" enctype="multipart/form-data">
+
+    <div class="user-settings-form">
+        <div class="form-elements">
+            <h3>User Settings</h3>
+            <div class="row">
+                <div class="col-md-4 form-label form-group">
+                    <label for="UserSettings.RequiredUserEmailValidation">User Email Validation Required</label>
+                </div>
+                <div class="col-md-8 form-group">
+                    <input type="checkbox" asp-for="UserSettings.RequiredUserEmailValidation">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 form-label form-group">
+                    <label for="UserSettings.NotifyOfNewCustomerRegistration">Notify about new customer registration</label>
+                </div>
+                <div class="col-md-8 form-group">
+                    <input type="checkbox" asp-for="UserSettings.NotifyOfNewCustomerRegistration">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 form-label form-group">
+                    <label for="UserSettings.DefaultStoreTimezone">Default Store Timezone</label>
+                </div>
+                <div class="col-md-8 form-group">
+                    <select asp-for="UserSettings.DefaultStoreTimezone" class="form-control" asp-items="@Model.AvailableTimeZones"></select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 form-label form-group">
+                    <label for="UserSettings.ShowNumberOfResultsPerPage">Show number of result per page</label>
+                </div>
+                <div class="col-md-8 form-group">
+                    <input type="number" class="form-control" asp-for="UserSettings.ShowNumberOfResultsPerPage">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="password-security-settings-form">
+
+
+    </div>
+
+    <div class="account-settings-form">
+
+    </div>
+
+    <div class="caching-settings-form">
+
+
+    </div>
+
+</form>
