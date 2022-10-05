@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Core;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
 using Service.Common.Interfaces;
-using System.Net;
 using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
 
 namespace Service.Common
 {
@@ -17,6 +16,26 @@ namespace Service.Common
             var data = JsonDocument.Parse(location);
             string ip = data.RootElement.GetProperty("ipAddress").ToString();
             return ip;
+        }
+
+        public List<SelectListItem> GetAllTimeZones()
+        {
+            string json = File.ReadAllText("wwwroot/files/timezones.json");
+            var timeZones = JsonConvert.DeserializeObject<List<TimeZones>>(json);
+            var list = timeZones?.Select(timezone => new SelectListItem
+            {
+                Text = timezone.Text,
+                Value = timezone.Value
+            }).ToList();
+            return list ??= new List<SelectListItem>();
+        }
+
+        public DateTime GetConvertedStoreTime(DateTime utcTime)
+        {
+            var localTime = TimeZoneInfo.ConvertTimeFromUtc(
+                    utcTime,
+                    TimeZoneInfo.FindSystemTimeZoneById("Bangladesh Standard Time"));
+            return Convert.ToDateTime(localTime.ToString("MM/dd/yyyy hh:mm tt"));
         }
     }
 }

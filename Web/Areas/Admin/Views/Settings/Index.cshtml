@@ -6,61 +6,223 @@
 
 
 <form class="settings-form" asp-action="Index" method="post" enctype="multipart/form-data">
-
+    <div class="menu-option-list settings-option-list d-flex justify-content-end">
+        <button type="submit" name="save" value="save" class="btn btn-success"><span class="material-symbols-outlined">save</span><span>Save</span></button>
+    </div>
     <div class="user-settings-form">
         <div class="form-elements">
-            <h3>User Settings</h3>
-            <div class="row">
-                <div class="col-md-4 form-label form-group">
-                    <label for="UserSettings.RequiredUserEmailValidation">User Email Validation Required</label>
+            <h2 class="collapsible">User Settings</h2>
+            <div class="collapsible-content">
+                <hr />
+                <div class="row">
+                    <div class="col-md-4 form-label form-group">
+                        <label for="UserSettings_RequiredUserEmailValidation">User Email Validation Required</label>
+                    </div>
+                    <div class="col-md-8 form-group">
+                        <input type="checkbox" asp-for="UserSettings.RequiredUserEmailValidation">
+                    </div>
                 </div>
-                <div class="col-md-8 form-group">
-                    <input type="checkbox" asp-for="UserSettings.RequiredUserEmailValidation">
-                </div>
-            </div>
 
-            <div class="row">
-                <div class="col-md-4 form-label form-group">
-                    <label for="UserSettings.NotifyOfNewCustomerRegistration">Notify about new customer registration</label>
+                <div class="row">
+                    <div class="col-md-4 form-label form-group">
+                        <label for="UserSettings_NotifyOfNewCustomerRegistration">Notify about new customer registration</label>
+                    </div>
+                    <div class="col-md-8 form-group">
+                        <input type="checkbox" asp-for="UserSettings.NotifyOfNewCustomerRegistration">
+                    </div>
                 </div>
-                <div class="col-md-8 form-group">
-                    <input type="checkbox" asp-for="UserSettings.NotifyOfNewCustomerRegistration">
-                </div>
-            </div>
 
-            <div class="row">
-                <div class="col-md-4 form-label form-group">
-                    <label for="UserSettings.DefaultStoreTimezone">Default Store Timezone</label>
+                <div class="row">
+                    <div class="col-md-4 form-label form-group">
+                        <label for="UserSettings_DefaultStoreTimezone">Default Store Timezone</label>
+                    </div>
+                    <div class="col-md-8 form-group">
+                        <select asp-for="UserSettings.DefaultStoreTimezone" class="form-control" asp-items="@Model.AvailableTimeZones"></select>
+                    </div>
                 </div>
-                <div class="col-md-8 form-group">
-                    <select asp-for="UserSettings.DefaultStoreTimezone" class="form-control" asp-items="@Model.AvailableTimeZones"></select>
-                </div>
-            </div>
 
-            <div class="row">
-                <div class="col-md-4 form-label form-group">
-                    <label for="UserSettings.ShowNumberOfResultsPerPage">Show number of result per page</label>
-                </div>
-                <div class="col-md-8 form-group">
-                    <input type="number" class="form-control" asp-for="UserSettings.ShowNumberOfResultsPerPage">
+                <div class="row">
+                    <div class="col-md-4 form-label form-group">
+                        <label for="UserSettings_ShowNumberOfResultsPerPage">Show number of result per page</label>
+                    </div>
+                    <div class="col-md-8 form-group">
+                        <input type="number" class="form-control" asp-for="UserSettings.ShowNumberOfResultsPerPage">
+                    </div>
                 </div>
             </div>
+            
         </div>
 
     </div>
 
     <div class="password-security-settings-form">
+        <div class="form-elements">
+            <h2 class="collapsible">Password and Security Settings</h2>
+            <div class="collapsible-content">
+                <hr />
+                <div class="row">
+                    <div class="col-md-4 form-label form-group">
+                        <label for="PasswordAndSecuritySettings_PasswordMinimumLength">Password Minium Length</label>
+                    </div>
+                    <div class="col-md-8 form-group">
+                        <input type="number" class="form-control" asp-for="PasswordAndSecuritySettings.PasswordMinimumLength">
+                    </div>
+                </div>
 
+                <div class="row">
+                    <div class="col-md-4 form-label form-group">
+                        <label for="PasswordAndSecuritySettings_RequireAtLeastOneLowercase">Password must have at least one lowercase</label>
+                    </div>
+                    <div class="col-md-8 form-group">
+                        <input type="checkbox" asp-for="PasswordAndSecuritySettings.RequireAtLeastOneLowercase">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 form-label form-group">
+                        <label for="PasswordAndSecuritySettings_RequireAtLeastOneUppercase">Password must have at least one uppercase</label>
+                    </div>
+                    <div class="col-md-8 form-group">
+                        <input type="checkbox" asp-for="PasswordAndSecuritySettings.RequireAtLeastOneUppercase">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 form-label form-group">
+                        <label for="PasswordAndSecuritySettings_RequireAtLeastOneNonAlphanumeric">password must have at least one non alphanumeric character</label>
+                    </div>
+                    <div class="col-md-8 form-group">
+                        <input type="checkbox" asp-for="PasswordAndSecuritySettings.RequireAtLeastOneNonAlphanumeric">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 form-label form-group">
+                        <label for="PasswordAndSecuritySettings_RequireAtLeastOneDigit">password must have at least one digit</label>
+                    </div>
+                    <div class="col-md-8 form-group">
+                        <input type="checkbox" asp-for="PasswordAndSecuritySettings.RequireAtLeastOneDigit">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 form-label form-group">
+                        <label for="PasswordAndSecuritySettings_MaximumLoginFailure">Maximum login failure</label>
+                    </div>
+                    <div class="col-md-8 form-group">
+                        <input type="number" class="form-control" asp-for="PasswordAndSecuritySettings.MaximumLoginFailure">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 form-label form-group">
+                        <label for="PasswordAndSecuritySettings_LockTimeSeconds">Lock time in seconds</label>
+                    </div>
+                    <div class="col-md-8 form-group">
+                        <input type="number" class="form-control" asp-for="PasswordAndSecuritySettings.LockTimeSeconds">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 form-label form-group">
+                        <label for="PasswordAndSecuritySettings_PasswordFormatType">Password format type</label>
+                    </div>
+                    <div class="col-md-8 form-group">
+                        <select asp-for="PasswordAndSecuritySettings.PasswordFormatType" class="form-control" asp-items="@Model.AvailableCachingPriority"></select>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
 
     </div>
 
     <div class="account-settings-form">
+        <div class="form-elements">
+            <h2 class="collapsible">Account Settings</h2>
+            <div class="collapsible-content">
+                <hr />
 
+                <div class="row">
+                    <div class="col-md-4 form-label form-group">
+                        <label for="AccountSettings_EnabledUserName">Username enabled</label>
+                    </div>
+                    <div class="col-md-8 form-group">
+                        <input type="checkbox" asp-for="AccountSettings.EnabledUserName">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 form-label form-group">
+                        <label for="AccountSettings_EnabledGender">Gender enabled</label>
+                    </div>
+                    <div class="col-md-8 form-group">
+                        <input type="checkbox" asp-for="AccountSettings.EnabledGender">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 form-label form-group">
+                        <label for="AccountSettings_EnabledDateOfBirth">Date of birth enabled</label>
+                    </div>
+                    <div class="col-md-8 form-group">
+                        <input type="checkbox" asp-for="AccountSettings.EnabledDateOfBirth">
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
 
     <div class="caching-settings-form">
+        <div class="form-elements">
+            <h2 class="collapsible">Caching Settings</h2>
+            <div class="collapsible-content">
+                <hr />
 
+                <div class="row">
+                    <div class="col-md-4 form-label form-group">
+                        <label asp-for="CachingSettings.SlidingExpiration">Sliding Expiration in seconds</label>
+                    </div>
+                    <div class="col-md-8 form-group">
+                        <input type="number" class="form-control" asp-for="CachingSettings.SlidingExpiration">
+                    </div>
+                </div>
 
+                <div class="row">
+                    <div class="col-md-4 form-label form-group">
+                        <label asp-for="CachingSettings.AbsoluteExpiration">Absolute Expiration</label>
+                    </div>
+                    <div class="col-md-8 form-group">
+                        <input type="number" class="form-control" asp-for="CachingSettings.AbsoluteExpiration">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 form-label form-group">
+                        <label asp-for="CachingSettings.Priority">Caching Priority</label>
+                    </div>
+                    <div class="col-md-8 form-group">
+                        <select asp-for="CachingSettings.Priority" class="form-control" asp-items="@Model.AvailablePasswordFormats"></select>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
 </form>
+<script asp-location="Footer">
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        });
+    }
+</script>

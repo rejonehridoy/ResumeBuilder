@@ -1,4 +1,5 @@
 ﻿using Data.Users;
+using Service.Common.Interfaces;
 using Service.Users.Interfaces;
 using Web.Areas.Admin.Models.Users;
 using Web.Areas.Admin.ViewModels;
@@ -8,10 +9,13 @@ namespace Web.Areas.Admin.Factory
     public class UserModelFactory : IUserModelFactory
     {
         private readonly IUserService userService;
+        private readonly IWorkContext workContext;
         #region Ctor
-        public UserModelFactory(IUserService userService)
+        public UserModelFactory(IUserService userService,
+            IWorkContext workContext)
         {
             this.userService = userService;
+            this.workContext = workContext;
         }
         #endregion
 
@@ -52,9 +56,9 @@ namespace Web.Areas.Admin.Factory
                 Gender = u.Gender,
                 DateOfBirth = u.DateOfBirth,
                 LastIpAddress = u.LastIpAddress,
-                CreatedDate = u.CreatedDate,
-                LastActivityDate = u.LastActivityDate ?? u.LastActivityDate,
-                LastLoginDate = u.LastLoginDate ?? u.LastLoginDate,
+                CreatedDate = workContext.GetConvertedStoreTime(u.CreatedDate),
+                LastActivityDate = u.LastActivityDate != null ? workContext.GetConvertedStoreTime(u.LastActivityDate.Value) : null,
+                LastLoginDate = u.LastLoginDate != null ? workContext.GetConvertedStoreTime(u.LastLoginDate.Value) : null,
                 PictureId = u.PictureId
             }).ToList();
 

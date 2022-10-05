@@ -37,6 +37,7 @@ builder.Services.AddScoped<IPictureService, PictureService>();
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IWorkContext, WorkContext>();
 builder.Services.AddScoped<ISettingsModelFactory, SettingsModelFactory>();
+builder.Services.AddScoped<ISettingService, SettingService>();
 
 var app = builder.Build();
 

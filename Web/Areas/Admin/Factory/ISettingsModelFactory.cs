@@ -4,6 +4,7 @@ namespace Web.Areas.Admin.Factory
 {
     public interface ISettingsModelFactory
     {
-        Task<List<SelectListItem>> PrepareTimeZonesList();
+        Task<List<SelectListItem>> PreparePassowrdFormatTypeItemsAsync();
+        Task<List<SelectListItem>> PrepareCachingPriorityItemsAsync();
     }
 }

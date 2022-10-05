@@ -47,7 +47,14 @@
     var columnsTypes = columnCollections.map(col => col.render);
     var columns = columnCollections.map(col => col.data.charAt(0).toLowerCase() + col.data.substr(1));
 
-
+    function getFormatedDate(date)
+    {
+        let m = new Date(date);
+        let localHours = m.getHours() > 12 ? m.getHours() - 12 : m.getHours();
+        let AmPm = m.getHours() > 12 ? "PM" : "AM";
+        let dateString = ("0" + m.getDate()).slice(-2) + "-" + ("0" + (m.getMonth() + 1)).slice(-2) + "-" + m.getFullYear() + " " + ("0" + localHours).slice(-2) + ":" + ("0" + m.getMinutes()).slice(-2) + " " + AmPm;
+        return dateString;
+    }
     function getSearchFilterData()
     {
         let filterData = {};
@@ -128,8 +135,19 @@
                         else {
                             tableRows += '<td><span style="color:red;" class="material-symbols-outlined">cancel</span></td >';
                         }
-                    } else {
-                        tableRows += '<td>' + response.data[rowIndex][columns[index]] + '</td>';
+                    }
+                    else if (columns[index].toLowerCase().includes("date")){
+                        if (response.data[rowIndex][columns[index]] != null && response.data[rowIndex][columns[index]] != undefined){
+                            tableRows += '<td>' + getFormatedDate(response.data[rowIndex][columns[index]]) + '</td>';
+                        }else{
+                            tableRows += '<td></td>';
+                        }
+                    }
+                    else {
+                        if(response.data[rowIndex][columns[index]] == null)
+                            tableRows += '<td></td>';
+                        else
+                            tableRows += '<td>' + response.data[rowIndex][columns[index]] + '</td>';
                     }
                 }
             }

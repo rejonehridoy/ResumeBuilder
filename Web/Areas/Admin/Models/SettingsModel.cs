@@ -10,5 +10,7 @@ namespace Web.Areas.Admin.Models
         public AccountSettings AccountSettings { get; set; }
         public CachingSettings CachingSettings { get; set; }
         public List<SelectListItem> AvailableTimeZones { get; set; }
+        public List<SelectListItem> AvailablePasswordFormats { get; set; }
+        public List<SelectListItem> AvailableCachingPriority { get; set; }
     }
 }
