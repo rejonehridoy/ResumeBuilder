@@ -2,6 +2,10 @@
 @{
     ViewData["Title"] = "Settings";
     ViewBag.Title = "Settings";
+    var showUserSettingsTab = Model.CommonSettings.OpenUserSettingsTab ? "active" : "";
+    var showAccountSettingsTab = Model.CommonSettings.OpenAccountSettingsTab ? "active" : "";
+    var showPasswordSecuritySettingsTab = Model.CommonSettings.OpenPasswordSecuritySettingsTab ? "active" : "";
+    var showCachingSettingsTab = Model.CommonSettings.OpenCachingSettingsTab ? "active" : "";
 }
 
 
@@ -9,9 +13,28 @@
     <div class="menu-option-list settings-option-list d-flex justify-content-end">
         <button type="submit" name="save" value="save" class="btn btn-success"><span class="material-symbols-outlined">save</span><span>Save</span></button>
     </div>
+
+    @if(Model.ModelError.Count > 0){
+        foreach(var errorMessage in Model.ModelError){
+            <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                @errorMessage
+            </div>
+        }
+    }
+    @if (Model.SuccessMessage.Count > 0)
+    {
+        foreach (var successMessage in Model.SuccessMessage)
+        {
+            <div class="alert alert-success alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                @successMessage
+            </div>
+        }
+    }
     <div class="user-settings-form">
         <div class="form-elements">
-            <h2 class="collapsible">User Settings</h2>
+            <h2 class="collapsible @showUserSettingsTab" id="user-settings">User Settings</h2>
             <div class="collapsible-content">
                 <hr />
                 <div class="row">
@@ -46,7 +69,7 @@
                         <label for="UserSettings_ShowNumberOfResultsPerPage">Show number of result per page</label>
                     </div>
                     <div class="col-md-8 form-group">
-                        <input type="number" class="form-control" asp-for="UserSettings.ShowNumberOfResultsPerPage">
+                        <input type="number" class="form-control" asp-for="UserSettings.ShowNumberOfResultsPerPage" required>
                     </div>
                 </div>
             </div>
@@ -57,15 +80,15 @@
 
     <div class="password-security-settings-form">
         <div class="form-elements">
-            <h2 class="collapsible">Password and Security Settings</h2>
+            <h2 class="collapsible @showPasswordSecuritySettingsTab" id="password-security-settings">Password and Security Settings</h2>
             <div class="collapsible-content">
                 <hr />
                 <div class="row">
                     <div class="col-md-4 form-label form-group">
-                        <label for="PasswordAndSecuritySettings_PasswordMinimumLength">Password Minium Length</label>
+                        <label for="PasswordAndSecuritySettings_PasswordMinimumLength">Password Minimum Length</label>
                     </div>
                     <div class="col-md-8 form-group">
-                        <input type="number" class="form-control" asp-for="PasswordAndSecuritySettings.PasswordMinimumLength">
+                        <input type="number" class="form-control" asp-for="PasswordAndSecuritySettings.PasswordMinimumLength" required>
                     </div>
                 </div>
 
@@ -110,7 +133,7 @@
                         <label for="PasswordAndSecuritySettings_MaximumLoginFailure">Maximum login failure</label>
                     </div>
                     <div class="col-md-8 form-group">
-                        <input type="number" class="form-control" asp-for="PasswordAndSecuritySettings.MaximumLoginFailure">
+                        <input type="number" class="form-control" asp-for="PasswordAndSecuritySettings.MaximumLoginFailure" required>
                     </div>
                 </div>
 
@@ -119,7 +142,7 @@
                         <label for="PasswordAndSecuritySettings_LockTimeSeconds">Lock time in seconds</label>
                     </div>
                     <div class="col-md-8 form-group">
-                        <input type="number" class="form-control" asp-for="PasswordAndSecuritySettings.LockTimeSeconds">
+                        <input type="number" class="form-control" asp-for="PasswordAndSecuritySettings.LockTimeSeconds" required>
                     </div>
                 </div>
 
@@ -139,7 +162,7 @@
 
     <div class="account-settings-form">
         <div class="form-elements">
-            <h2 class="collapsible">Account Settings</h2>
+            <h2 class="collapsible @showAccountSettingsTab" id="account-settings">Account Settings</h2>
             <div class="collapsible-content">
                 <hr />
 
@@ -176,7 +199,7 @@
 
     <div class="caching-settings-form">
         <div class="form-elements">
-            <h2 class="collapsible">Caching Settings</h2>
+            <h2 class="collapsible @showCachingSettingsTab" id="caching-settings">Caching Settings</h2>
             <div class="collapsible-content">
                 <hr />
 
@@ -185,7 +208,7 @@
                         <label asp-for="CachingSettings.SlidingExpiration">Sliding Expiration in seconds</label>
                     </div>
                     <div class="col-md-8 form-group">
-                        <input type="number" class="form-control" asp-for="CachingSettings.SlidingExpiration">
+                        <input type="number" class="form-control" asp-for="CachingSettings.SlidingExpiration" required>
                     </div>
                 </div>
 
@@ -194,7 +217,7 @@
                         <label asp-for="CachingSettings.AbsoluteExpiration">Absolute Expiration</label>
                     </div>
                     <div class="col-md-8 form-group">
-                        <input type="number" class="form-control" asp-for="CachingSettings.AbsoluteExpiration">
+                        <input type="number" class="form-control" asp-for="CachingSettings.AbsoluteExpiration" required>
                     </div>
                 </div>
 
@@ -211,18 +234,76 @@
     </div>
 </form>
 <script asp-location="Footer">
+
+    function updateMaxHeight(content){
+        content = content.nextElementSibling;
+        if (content.style.maxHeight) {
+            content.style.maxHeight = null;
+        } else {
+            content.style.maxHeight = content.scrollHeight + "px";
+        }
+    }
+    if ('@Model.CommonSettings.OpenUserSettingsTab' == 'True'){
+        updateMaxHeight(document.getElementById("user-settings"));
+    }
+    if ('@Model.CommonSettings.OpenPasswordSecuritySettingsTab' == 'True') {
+        updateMaxHeight(document.getElementById("password-security-settings"));
+    }
+    if ('@Model.CommonSettings.OpenAccountSettingsTab' == 'True') {
+        updateMaxHeight(document.getElementById("account-settings"));
+    }
+    if ('@Model.CommonSettings.OpenCachingSettingsTab' == 'True') {
+        updateMaxHeight(document.getElementById("caching-settings"));
+    }
+
+    function saveSettingsIntoDatabase(key, value){
+        $.ajax({
+            url: "/Admin/Settings/SaveTabSetting",
+            type: "GET",
+            dataType: "json",
+            data: {
+                key: key,
+                oldValue: value
+            },
+            success: function (data, textStatus, jqXHR) {
+            }
+        });
+    }
+    function updateSettings(id){
+        if (id.includes("user")){
+            let key = '@Model.CommonSettings.GetType().Name'+'.'+'@nameof(Model.CommonSettings.OpenUserSettingsTab)';
+            saveSettingsIntoDatabase(key, '@Model.CommonSettings.OpenUserSettingsTab');
+            @{
+                Model.CommonSettings.OpenUserSettingsTab = !Model.CommonSettings.OpenUserSettingsTab;
+            }
+        }else if(id.includes("password")){
+            let key = '@Model.CommonSettings.GetType().Name' + '.' + '@nameof(Model.CommonSettings.OpenPasswordSecuritySettingsTab)';
+            saveSettingsIntoDatabase(key, '@Model.CommonSettings.OpenPasswordSecuritySettingsTab');
+            @{
+                Model.CommonSettings.OpenPasswordSecuritySettingsTab = !Model.CommonSettings.OpenPasswordSecuritySettingsTab;
+            }
+        } else if (id.includes("account")) {
+            let key = '@Model.CommonSettings.GetType().Name' + '.' + '@nameof(Model.CommonSettings.OpenAccountSettingsTab)';
+            saveSettingsIntoDatabase(key, '@Model.CommonSettings.OpenAccountSettingsTab');
+            @{
+                Model.CommonSettings.OpenAccountSettingsTab = !Model.CommonSettings.OpenAccountSettingsTab;
+            }
+        } else if (id.includes("caching")) {
+            let key = '@Model.CommonSettings.GetType().Name' + '.' + '@nameof(Model.CommonSettings.OpenCachingSettingsTab)';
+            saveSettingsIntoDatabase(key, '@Model.CommonSettings.OpenCachingSettingsTab');
+            @{
+                Model.CommonSettings.OpenCachingSettingsTab = !Model.CommonSettings.OpenCachingSettingsTab;
+            }
+        }
+    }
     var coll = document.getElementsByClassName("collapsible");
     var i;
 
     for (i = 0; i < coll.length; i++) {
         coll[i].addEventListener("click", function () {
             this.classList.toggle("active");
-            var content = this.nextElementSibling;
-            if (content.style.maxHeight) {
-                content.style.maxHeight = null;
-            } else {
-                content.style.maxHeight = content.scrollHeight + "px";
-            }
+            updateSettings(this.id);
+            updateMaxHeight(this);
         });
     }
 </script>

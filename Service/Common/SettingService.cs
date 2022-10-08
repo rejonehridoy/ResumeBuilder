@@ -136,6 +136,7 @@ namespace Service.Common
         {
             if (string.IsNullOrEmpty(key))
                 return;
+            key = key.Trim().ToLowerInvariant();
             var setting = (await GetAllSettingsAsync()).Where(setting => setting.Name.Equals(key)).FirstOrDefault();
             if(setting != null)
             {
@@ -151,8 +152,9 @@ namespace Service.Common
                     Value = value,
                 };
                 await InsertSettingAsync(newSetting);
-
             }
+            //and now clear cache
+            await ClearCacheAsync();
         }
 
         public async Task UpdateSettingAsync(Setting setting)

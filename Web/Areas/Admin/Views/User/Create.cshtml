@@ -12,7 +12,7 @@
 
     @if (Model.SuccessMessage.Count > 0)
     {
-        foreach (var successMessage in Model.ModelError)
+        foreach (var successMessage in Model.SuccessMessage)
         {
             <div class="alert alert-success alert-dismissable">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
